@@ -2,43 +2,53 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
+/**
+ * @property string $uuid
+ * @property string $name
+ * @property string $course_id
+ * @property string $major_id
+ * @property string $email
+ * @property string $password
+ * @property string $role
+ * @property string $birthday
+ * @property string $year_of_admission
+ * @property string $gender
+ * @property string $phone
+ * @property string $address
+ * @property string $cre_at
+ * @property string $upd_at
+ */
+class User extends Model
 {
-    use HasApiTokens, HasFactory, Notifiable;
+
+    const CREATED_AT = 'cre_at';
+
+    const UPDATED_AT = 'upd_at';
+    /**
+     * The primary key for the model.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'uuid';
 
     /**
-     * The attributes that are mass assignable.
+     * The "type" of the auto-incrementing ID.
      *
-     * @var array<int, string>
+     * @var string
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    protected $keyType = 'string';
 
     /**
-     * The attributes that should be hidden for serialization.
+     * Indicates if the IDs are auto-incrementing.
      *
-     * @var array<int, string>
+     * @var bool
      */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    public $incrementing = false;
 
     /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
+     * @var array
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    protected $fillable = ['name', 'course_id', 'major_id', 'email', 'password', 'role', 'birthday', 'year_of_admission', 'gender', 'phone', 'address', 'cre_at', 'upd_at'];
 }

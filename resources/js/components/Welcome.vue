@@ -1,6 +1,6 @@
 <template>
     <h1>{{ title }}</h1>
-    <button class="btn btn-primary">11reesr1</button>
+    <button class="btn btn-primary">11reeeeeww1</button>
 </template>
 <script>
 export default {
