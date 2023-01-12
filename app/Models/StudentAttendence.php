@@ -26,5 +26,5 @@ class StudentAttendence extends Model
     /**
      * @var array
      */
-    protected $fillable = ['status', 'cre_at', 'upd_at'];
+    protected $fillable = ['status', 'cre_at', 'upd_at','student_id', 'attendance_id'];
 }

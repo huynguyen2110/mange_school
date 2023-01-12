@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $cre_at
  * @property string $upd_at
  */
-class Attendence extends Model
+class Attendance extends Model
 {
     const CREATED_AT = 'cre_at';
 

@@ -15,4 +15,3 @@
 </div>
 {{--<script src="{{ mix('js/app.js') }}" defer type="text/javascript"></script>--}}
 </body>
-</html>

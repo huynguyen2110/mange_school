@@ -18,5 +18,5 @@ class ClassStudent extends Model
     /**
      * @var array
      */
-    protected $fillable = ['cre_at', 'upd_at'];
+    protected $fillable = ['cre_at', 'upd_at','student_id', 'teacher_id'];
 }

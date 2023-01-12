@@ -21,5 +21,5 @@ class Score extends Model
     /**
      * @var array
      */
-    protected $fillable = ['total', 'cre_at', 'upd_at'];
+    protected $fillable = ['student_id', 'class_id', 'midterm_score', 'final_score','total', 'cre_at', 'upd_at'];
 }
