@@ -6,13 +6,13 @@
     <title>Laravel</title>
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-        <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app.js') }}" defer></script>
 </head>
 <body class="body">
 <div id="app">
     <welcome></welcome>
-    <button>1111222111</button>
+    <button class="btn btn-primary">1111222111</button>
 </div>
-<script src="{{ mix('js/app.js') }}" defer type="text/javascript"></script>
+{{--<script src="{{ mix('js/app.js') }}" defer type="text/javascript"></script>--}}
 </body>
 </html>

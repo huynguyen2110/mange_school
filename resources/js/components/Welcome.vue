@@ -1,11 +1,11 @@
 <template>
     <h1>{{ title }}</h1>
-    <button class="btn btn-secondary">11wssrrr1</button>
+    <button class="btn btn-primary">11reesr1</button>
 </template>
 <script>
 export default {
     setup: () => ({
-        title: 'Huy1234 '
+        title: 'Huy1www234 '
     })
 }
 </script>
