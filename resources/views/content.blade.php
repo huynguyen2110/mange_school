@@ -1,6 +1,6 @@
-@extends('layouts.user')
+@extends('layouts.admin')
 
 @section('content')
-    <div>11111111111111111</div>
+    <welcome></welcome>
 
 @endsection
