@@ -1,5 +1,6 @@
+
 @extends('layouts.admin')
 
 @section('content')
-    <limit-page-option></limit-page-option>
+    <create-student></create-student>
 @endsection
