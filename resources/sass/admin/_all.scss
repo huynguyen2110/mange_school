@@ -1,3 +1,13 @@
 .red-text {
-    color: green;
+    color: red;
+}
+.required-label{
+    color: red;
+    font-size: 20px;
+}
+.error {
+    display: inline-block;
+    color: red;
+    margin-top: 5px;
+    margin-left: 5px;
 }

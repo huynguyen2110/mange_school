@@ -17,11 +17,18 @@
         "resolve-url-loader": "^5.0.0"
     },
     "dependencies": {
+        "@vee-validate/i18n": "^4.7.3",
+        "@vee-validate/rules": "^4.7.3",
+        "@vuepic/vue-datepicker": "^3.6.5",
         "bootstrap": "^5.2.3",
+        "jquery": "^3.6.3",
+        "notyf": "^3.10.0",
         "sass": "^1.57.1",
         "sass-loader": "^13.2.0",
+        "vee-validate": "^4.7.3",
         "vue": "^3.2.36",
         "vue-loader": "^17.0.1",
-        "vue-router": "^4.0.13"
+        "vue-router": "^4.0.13",
+        "vue-sweetalert2": "^5.0.5"
     }
 }

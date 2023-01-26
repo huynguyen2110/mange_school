@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TeacherController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,4 +21,11 @@ Route::get('/', function () {
 });
 
 Route::resource('/admin', AdminController::class);
-Route::resource('/student', StudentController::class);
+Route::post('/students/check-mail', [StudentController::class, 'checkMail'])->name('students.checkmail');
+Route::post('/students/check-phone', [StudentController::class, 'checkPhone'])->name('students.checkphone');
+Route::resource('/students', StudentController::class);
+
+
+Route::resource('/teachers', TeacherController::class);
+
+

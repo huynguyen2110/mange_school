@@ -2,12 +2,13 @@
 @extends('layouts.admin')
 
 @section('content')
-    <create-student
+    <edit-student
         :data="{{json_encode([
             'urlBack' => route('students.index'),
-            'urlStore' => route('students.store'),
+            'urlUpdate' => route('students.update', $student->uuid),
             'urlCheckEmail' => route('students.checkmail'),
             'urlCheckPhone' => route('students.checkphone'),
+            'student' => $student,
 ])}}">
-    </create-student>
+    </edit-student>
 @endsection

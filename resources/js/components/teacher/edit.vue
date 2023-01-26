@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid">
         <div class="path d-flex aline-flex-end">
-            <h3 class="list mb-4 d-flex align-self-end ml-2">Thêm sinh viên</h3>
+            <h3 class="list mb-4 d-flex align-self-end ml-2">Chỉnh sửa giảng viên</h3>
         </div>
         <div class="fade-in">
             <div class="row">
@@ -18,9 +18,10 @@
                                         method="POST"
                                         @submit="handleSubmit($event, onSubmit)"
                                         ref="formData"
-                                        :action="data.urlStore"
+                                        :action="data.urlUpdate"
                                     >
                                         <input type="hidden" :value="csrfToken" name="_token"/>
+                                        <input type="hidden" value="PUT" name="_method" />
                                         <div class="mb-4">
                                             <label for="name" class="form-label"
                                             >Tên <span class="required-label">*</span></label
@@ -51,36 +52,37 @@
                                             />
                                             <ErrorMessage class="error" name="email"/>
                                         </div>
-                                        <div class="mb-4">
-                                            <label for="password" class="form-label"
-                                            >Mật khẩu <span class="required-label">*</span></label
-                                            >
-                                            <Field
-                                                type="password"
-                                                class="form-control"
-                                                name="password"
-                                                v-model="model.password"
-                                                rules="required|max:16|min:8|password_rule"
-                                                placeholder="Mật khẩu"
-                                                id="password"
-                                            />
-                                            <ErrorMessage class="error" name="password"/>
-                                        </div>
-                                        <div class="mb-4">
-                                            <label for="password_old" class="form-label"
-                                            >Xác nhận mật khẩu <span class="required-label">*</span></label
-                                            >
-                                            <Field
-                                                type="password"
-                                                class="form-control"
-                                                name="password_old"
-                                                v-model="model.password_old"
-                                                rules="required|confirmed:@password"
-                                                placeholder="Xác nhận mật khẩu"
-                                                id="password_old"
-                                            />
-                                            <ErrorMessage class="error" name="password_old"/>
-                                        </div>
+                                        <!--                                        <div class="mb-4">-->
+                                        <!--                                            <label for="password" class="form-label"-->
+                                        <!--                                            >Mật khẩu <span class="required-label">*</span></label-->
+                                        <!--                                            >-->
+                                        <!--                                            <Field-->
+                                        <!--                                                type="password"-->
+                                        <!--                                                class="form-control"-->
+                                        <!--                                                name="password"-->
+                                        <!--                                                v-model="model.password"-->
+                                        <!--                                                rules="required|max:16|min:8|password_rule"-->
+                                        <!--                                                placeholder="Mật khẩu"-->
+                                        <!--                                                id="password"-->
+                                        <!--                                            />-->
+                                        <!--                                            <ErrorMessage class="error" name="password"/>-->
+                                        <!--                                        </div>-->
+                                        <!--                                        <div class="mb-4">-->
+                                        <!--                                            <label for="password_old" class="form-label"-->
+                                        <!--                                            >Xác nhận mật khẩu <span class="required-label">*</span></label-->
+                                        <!--                                            >-->
+                                        <!--                                            <Field-->
+                                        <!--                                                type="password"-->
+                                        <!--                                                class="form-control"-->
+                                        <!--                                                name="password_old"-->
+                                        <!--                                                v-model="model.password_old"-->
+                                        <!--                                                rules="required|confirmed:@password"-->
+                                        <!--                                                placeholder="Xác nhận mật khẩu"-->
+                                        <!--                                                id="password_old"-->
+                                        <!--                                            />-->
+                                        <!--                                            <ErrorMessage class="error" name="password_old"/>-->
+                                        <!--                                        </div>-->
+
                                         <div class="mb-4">
                                             <label for="major" class="form-label"
                                             >Ngành <span class="required-label">*</span></label
@@ -106,32 +108,6 @@
                                                 </option>
                                             </Field>
                                             <ErrorMessage class="error" name="major"/>
-                                        </div>
-                                        <div class="mb-4">
-                                            <label for="course" class="form-label"
-                                            >Khóa <span class="required-label">*</span></label
-                                            >
-                                            <Field
-                                                type="text"
-                                                class="form-control"
-                                                as="select"
-                                                v-model="model.course"
-                                                rules="required"
-                                                name="course"
-                                                placeholder="Khóa"
-                                                id="course"
-                                            >
-                                                <option value="" disabled selected>
-                                                    Chọn khóa
-                                                </option>
-                                                <option value="1">
-                                                    K63
-                                                </option>
-                                                <option value="2">
-                                                    K64
-                                                </option>
-                                            </Field>
-                                            <ErrorMessage class="error" name="course"/>
                                         </div>
 
                                         <div class="mb-4">
@@ -263,6 +239,7 @@ export default {
         });
     },
     created() {
+        console.log(this.data.teacher);
         let messError = {
             en: {
                 fields: {
@@ -276,11 +253,9 @@ export default {
                         unique_custom: "Email trùng với email đã đăng kí",
                         email: "Email không đúng với định dạng",
                     },
+
                     major: {
                         required: "Ngành không được để trống",
-                    },
-                    course: {
-                        required: "Khóa không được để trống",
                     },
                     password: {
                         required: "Mật khẩu không được để trống",
@@ -318,6 +293,7 @@ export default {
             return axios
                 .post(that.data.urlCheckEmail, {
                     _token: Laravel.csrfToken,
+                    id: that.data.teacher.uuid,
                     value: value,
                 })
                 .then(function (response) {
@@ -329,6 +305,7 @@ export default {
             return axios
                 .post(that.data.urlCheckPhone, {
                     _token: Laravel.csrfToken,
+                    id: that.data.teacher.uuid,
                     value: value,
                 })
                 .then(function (response) {
@@ -341,7 +318,7 @@ export default {
     data: function () {
         return{
             csrfToken: Laravel.csrfToken,
-            model: {},
+            model: this.data.teacher,
             flagShowLoader: false,
         }
     },

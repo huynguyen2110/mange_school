@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid">
         <div class="path d-flex aline-flex-end">
-            <h3 class="list mb-4 d-flex align-self-end ml-2">Thêm sinh viên</h3>
+            <h3 class="list mb-4 d-flex align-self-end ml-2">Thêm giảng viên</h3>
         </div>
         <div class="fade-in">
             <div class="row">
@@ -106,32 +106,6 @@
                                                 </option>
                                             </Field>
                                             <ErrorMessage class="error" name="major"/>
-                                        </div>
-                                        <div class="mb-4">
-                                            <label for="course" class="form-label"
-                                            >Khóa <span class="required-label">*</span></label
-                                            >
-                                            <Field
-                                                type="text"
-                                                class="form-control"
-                                                as="select"
-                                                v-model="model.course"
-                                                rules="required"
-                                                name="course"
-                                                placeholder="Khóa"
-                                                id="course"
-                                            >
-                                                <option value="" disabled selected>
-                                                    Chọn khóa
-                                                </option>
-                                                <option value="1">
-                                                    K63
-                                                </option>
-                                                <option value="2">
-                                                    K64
-                                                </option>
-                                            </Field>
-                                            <ErrorMessage class="error" name="course"/>
                                         </div>
 
                                         <div class="mb-4">
@@ -278,9 +252,6 @@ export default {
                     },
                     major: {
                         required: "Ngành không được để trống",
-                    },
-                    course: {
-                        required: "Khóa không được để trống",
                     },
                     password: {
                         required: "Mật khẩu không được để trống",

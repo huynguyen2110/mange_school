@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\StatusCode;
+use App\Http\Requests\StudentRequest;
 use App\Models\User;
 use App\Repositories\Student\StudentInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class StudentController extends BaseController
 {
@@ -45,9 +48,18 @@ class StudentController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StudentRequest $request)
     {
-        //
+        $student = $this->student->store($request);
+
+        if (! $student) {
+            $this->setFlash(__('Thêm sinh viên thất bại'), 'error');
+
+            return redirect()->route('students.create');
+        }
+        $this->setFlash(__('Thêm sinh viên thành công'));
+
+        return redirect(route('students.index'));
     }
 
     /**
@@ -69,7 +81,16 @@ class StudentController extends BaseController
      */
     public function edit($id)
     {
-        //
+        $student = $this->student->getById($id);
+
+        if (! $this->student->getById($id)) {
+            $this->setFlash(__('Không tìm thấy sinh viên'), 'error');
+
+            return redirect(route('students.index'));
+        }
+        return view('student.edit',[
+            'student' => $student,
+        ]);
     }
 
     /**
@@ -79,9 +100,17 @@ class StudentController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StudentRequest $request, $id)
     {
-        //
+        if ($this->student->update($request, $id)) {
+            $this->setFlash(__('Cập nhật thông tin sinh viên thành công'));
+
+            return redirect(route('students.index'));
+        }
+
+        $this->setFlash(__('Cập nhật thông tin sinh viên thất bại'), 'error');
+
+        return redirect(route('students.edit', $id));
     }
 
     /**
@@ -92,6 +121,34 @@ class StudentController extends BaseController
      */
     public function destroy($id)
     {
-        //
+        if ($this->student->destroy($id)) {
+            return response()->json([
+                'message' => 'Đã xóa thành công',
+            ], StatusCode::OK);
+        }
+
+        return response()->json([
+            'message' => 'Có lỗi xảy ra',
+        ], StatusCode::INTERNAL_ERR);
+    }
+
+    public function checkMail(Request $request)
+    {
+        $data = $request->all();
+        $data['id'] = $request->id;
+
+        return response()->json([
+            'valid' => $this->student->checkEmail($data),
+        ], StatusCode::OK);
+    }
+
+    public function checkPhone(Request $request)
+    {
+        $data = $request->all();
+        $data['id'] = $request->id;
+
+        return response()->json([
+            'valid' => $this->student->checkPhone($data),
+        ], StatusCode::OK);
     }
 }
