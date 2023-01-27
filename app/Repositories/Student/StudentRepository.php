@@ -97,7 +97,6 @@ class StudentRepository extends BaseController implements StudentInterface
             DB::beginTransaction();
 
             $student = $this->student->where('uuid', $id)->first();
-            $student->uuid = Base::generateUuid('std');
             $student->name = $request->name;
             $student->email = $request->email;
 //            $student->password = Hash::make($request->password);
@@ -107,7 +106,6 @@ class StudentRepository extends BaseController implements StudentInterface
             $student->address = $request->address;
             $student->major_id = $request->major_id;
             $student->course_id = $request->course_id;
-            $student->year_of_admission = date("Y");
 
             if (! $student->save()) {
                 DB::rollBack();

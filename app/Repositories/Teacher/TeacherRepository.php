@@ -97,7 +97,6 @@ class TeacherRepository extends BaseController implements TeacherInterface
             DB::beginTransaction();
 
             $teacher = $this->teacher->where('uuid', $id)->first();
-            $teacher->uuid = Base::generateUuid('std');
             $teacher->name = $request->name;
             $teacher->email = $request->email;
 //            $teacher->password = Hash::make($request->password);
@@ -106,7 +105,6 @@ class TeacherRepository extends BaseController implements TeacherInterface
             $teacher->phone = $request->phone;
             $teacher->address = $request->address;
             $teacher->major_id = $request->major_id;
-            $teacher->year_of_admission = date("Y");
 
 
             if (! $teacher->save()) {
