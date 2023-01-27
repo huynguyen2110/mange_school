@@ -31,6 +31,7 @@ class TeacherRepository extends BaseController implements TeacherInterface
     {
         $newSizeLimit = $this->newListLimit($request);
         $teacherBuilder = $this->teacher
+            ->with('majors')
             ->where('role', UserRole::Teacher)
             ->orderBy('cre_at', 'desc');
 

@@ -51,4 +51,14 @@ class User extends Model
      * @var array
      */
     protected $fillable = ['name', 'course_id', 'major_id', 'email', 'password', 'role', 'birthday', 'year_of_admission', 'gender', 'phone', 'address', 'cre_at', 'upd_at'];
+
+    public function majors()
+    {
+        return $this->belongsTo(Major::class,'major_id','id');
+    }
+
+    public function courses()
+    {
+        return $this->belongsTo(Course::class,'course_id','id');
+    }
 }

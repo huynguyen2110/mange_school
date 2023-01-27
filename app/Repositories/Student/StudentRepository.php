@@ -31,6 +31,7 @@ class StudentRepository extends BaseController implements StudentInterface
     {
         $newSizeLimit = $this->newListLimit($request);
         $studentBuilder = $this->student
+            ->with(['majors', 'courses'])
             ->where('role', UserRole::Student)
             ->orderBy('cre_at', 'desc');
 

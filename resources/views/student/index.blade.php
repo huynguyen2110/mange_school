@@ -43,8 +43,9 @@
                                     <tr>
                                         <th >Tên</th>
                                         <th >Email</th>
-                                        <th >Mật khẩu</th>
-                                        <th >Chức vụ</th>
+                                        <th >Số điện thoại</th>
+                                        <th >Ngành</th>
+                                        <th >Khóa</th>
                                         <th></th>
                                     </tr>
                                     </thead>
@@ -53,8 +54,9 @@
                                         <tr>
                                             <td >{{$item->name}}</td>
                                             <td >{{$item->email}}</td>
-                                            <td >11</td>
-                                            <td >{{\App\Enums\UserRole::getDescription($item->role)}}</td>
+                                            <td >{{$item->phone}}</td>
+                                            <td >{{$item->majors->name}}</td>
+                                            <td >{{$item->courses->name}}</td>
                                             <td class="float-right">
                                                 <a class="btn btn-xs btn-info m-1 " href="{{route('students.edit', $item->uuid)}}">
                                                     Sửa
