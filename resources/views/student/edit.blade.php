@@ -9,6 +9,8 @@
             'urlCheckEmail' => route('students.checkmail'),
             'urlCheckPhone' => route('students.checkphone'),
             'student' => $student,
+            'major' => $major,
+            'course' => $course
 ])}}">
     </edit-student>
 @endsection

@@ -3,6 +3,8 @@
 namespace App\Repositories\Teacher;
 
 use App\Enums\UserRole;
+use App\Models\Course;
+use App\Models\Major;
 use App\Models\User;
 use App\Http\Controllers\BaseController;
 use App\Repositories\Teacher\TeacherInterface;
@@ -16,9 +18,13 @@ use Nette\Utils\Paginator;
 class TeacherRepository extends BaseController implements TeacherInterface
 {
     private User $teacher;
-    public function __construct(User $teacher)
+    private Major $major;
+    private Course $course;
+    public function __construct(User $teacher, Major $major, Course $course)
     {
         $this->teacher = $teacher;
+        $this->major = $major;
+        $this->course = $course;
     }
 
     public function get($request)
@@ -65,7 +71,7 @@ class TeacherRepository extends BaseController implements TeacherInterface
             $teacher->gender = $request->gender;
             $teacher->phone = $request->phone;
             $teacher->address = $request->address;
-            $teacher->major_id = $request->major;
+            $teacher->major_id = $request->major_id;
             $teacher->year_of_admission = date("Y");
             $teacher->role = UserRole::Teacher;
 
@@ -99,7 +105,7 @@ class TeacherRepository extends BaseController implements TeacherInterface
             $teacher->gender = $request->gender;
             $teacher->phone = $request->phone;
             $teacher->address = $request->address;
-            $teacher->major_id = $request->major;
+            $teacher->major_id = $request->major_id;
             $teacher->year_of_admission = date("Y");
 
 
@@ -126,5 +132,17 @@ class TeacherRepository extends BaseController implements TeacherInterface
         }
 
         return $user->delete();
+    }
+
+
+    public function getMajors()
+    {
+        return $this->major->get();
+    }
+
+    public function getCourses()
+    {
+        return $this->course->get();
+
     }
 }

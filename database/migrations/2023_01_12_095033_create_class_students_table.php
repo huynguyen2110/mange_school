@@ -16,10 +16,10 @@ class CreateClassStudentsTable extends Migration
     {
         Schema::create('class_students', function (Blueprint $table) {
             $table->string('student_id', 128);
-            $table->string('teacher_id', 128);
+            $table->string('class_id', 128);
             $table->dateTime('cre_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->dateTime('upd_at')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->primary(['student_id', 'teacher_id']);
+            $table->primary(['student_id', 'class_id']);
         });
     }
 

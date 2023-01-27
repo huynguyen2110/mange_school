@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Enums\StatusCode;
 use App\Http\Requests\StudentRequest;
+use App\Models\Course;
 use App\Models\User;
+use App\Repositories\Course\CourseInterface;
+use App\Repositories\Major\MajorInterface;
 use App\Repositories\Student\StudentInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -13,8 +16,14 @@ class StudentController extends BaseController
 {
    private $student;
 
-    public function __construct(StudentInterface $student){
+   private $major;
+
+   private $course;
+
+    public function __construct(StudentInterface $student, MajorInterface $major, CourseInterface $course){
         $this->student = $student;
+        $this->major = $major;
+        $this->course = $course;
     }
 
     /**
@@ -25,6 +34,7 @@ class StudentController extends BaseController
     public function index(Request $request)
     {
         $users = $this->student->get($request);
+
         return view('student.index',[
             'users' => $users,
             'newSizeLimit' => $this->newListLimit($request),
@@ -39,7 +49,13 @@ class StudentController extends BaseController
      */
     public function create()
     {
-        return view('student.create');
+        $major = $this->student->getMajors();
+        $course = $this->student->getCourses();
+
+        return view('student.create',[
+            'major' => $major,
+            'course' => $course,
+        ]);
     }
 
     /**
@@ -81,7 +97,10 @@ class StudentController extends BaseController
      */
     public function edit($id)
     {
+
         $student = $this->student->getById($id);
+        $major = $this->student->getMajors();
+        $course = $this->student->getCourses();
 
         if (! $this->student->getById($id)) {
             $this->setFlash(__('Không tìm thấy sinh viên'), 'error');
@@ -90,6 +109,8 @@ class StudentController extends BaseController
         }
         return view('student.edit',[
             'student' => $student,
+            'major' => $major,
+            'course' => $course,
         ]);
     }
 

@@ -7,7 +7,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="path d-flex aline-flex-end">
-            <h3 class="list mb-4 d-flex align-self-end ml-2">Quản lí giảng viên</h3>
+            <h3 class="list mb-4 d-flex align-self-end ml-2">Quản lí ngành học</h3>
         </div>
         <div class="row">
             <div class="col-lg-12">
@@ -29,7 +29,7 @@
                 <div class="card">
                     <div class="card-body">
                         <button class="btn btn-primary d-block mb-4 float-right">
-                            <a class="btn btn-primary" href="{{route('teachers.create')}}">Tạo mới</a>
+                            <a class="btn btn-primary" href="{{route('majors.create')}}">Tạo mới</a>
                         </button>
                         <div class="col-sm-3 mb-4">
                             <limit-page-option :limit-page-option="{{ json_encode(PAGE_SIZE_LIMIT) }}"
@@ -42,28 +42,18 @@
                                     <thead>
                                     <tr>
                                         <th >Tên</th>
-                                        <th >Email</th>
-                                        <th >Mật khẩu</th>
-                                        <th >Chức vụ</th>
-                                        <th></th>
+                                        <th >Năm thành lập</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     @foreach ($users as $index => $item)
                                         <tr>
                                             <td >{{$item->name}}</td>
-                                            <td >{{$item->email}}</td>
-                                            <td >11</td>
-                                            <td >{{\App\Enums\UserRole::getDescription($item->role)}}</td>
+                                            <td >{{$item->founded_year}}</td>
                                             <td>
-                                                <a class="btn btn-xs btn-info m-1" href="{{route('teachers.edit', $item->uuid)}}">
+                                                <a class="btn btn-xs btn-info m-1" href="{{route('majors.edit', $item->id)}}">
                                                     Sửa
                                                 </a>
-
-                                                <btn-delete-confirm
-                                                    :message-confirm="{{ json_encode('Bạn có muốn xóa giảng viên này không？') }}"
-                                                    :delete-action="{{ json_encode(route('teachers.destroy', $item->uuid)) }}">
-                                                </btn-delete-confirm>
                                             </td>
                                         </tr>
                                     @endforeach

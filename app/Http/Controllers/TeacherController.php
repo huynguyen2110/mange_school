@@ -34,7 +34,12 @@ class TeacherController extends BaseController
      */
     public function create()
     {
-        return view('teacher.create');
+        $major = $this->teacher->getMajors();
+
+
+        return view('teacher.create',[
+            'major' => $major,
+        ]);
 
     }
 
@@ -78,6 +83,7 @@ class TeacherController extends BaseController
     public function edit($id)
     {
         $teacher = $this->teacher->getById($id);
+        $major = $this->teacher->getMajors();
 
         if (! $this->teacher->getById($id)) {
             $this->setFlash(__('Không tìm thấy giảng viên'), 'error');
@@ -86,6 +92,7 @@ class TeacherController extends BaseController
         }
         return view('teacher.edit',[
             'teacher' => $teacher,
+            'major' => $major,
         ]);
     }
 

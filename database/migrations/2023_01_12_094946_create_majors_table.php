@@ -17,7 +17,7 @@ class CreateMajorsTable extends Migration
         Schema::create('majors', function (Blueprint $table) {
             $table->id();
             $table->string('name', 128)->unique();
-            $table->string('ministry_id', 128);
+            $table->string('founded_year', 10)->nullable();
             $table->dateTime('cre_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->dateTime('upd_at')->default(DB::raw('CURRENT_TIMESTAMP'));
         });

@@ -8,6 +8,7 @@
             'urlStore' => route('teachers.store'),
             'urlCheckEmail' => route('students.checkmail'),
             'urlCheckPhone' => route('students.checkphone'),
+            'major' => $major,
 ])}}">
     </create-teacher>
 @endsection

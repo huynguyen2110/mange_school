@@ -8,6 +8,8 @@
             'urlStore' => route('students.store'),
             'urlCheckEmail' => route('students.checkmail'),
             'urlCheckPhone' => route('students.checkphone'),
+            'major' => $major,
+            'course' => $course
 ])}}">
     </create-student>
 @endsection

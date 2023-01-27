@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property string $student_id
- * @property string $teacher_id
+ * @property string $class_id
  * @property string $cre_at
  * @property string $upd_at
  */
@@ -18,5 +18,5 @@ class ClassStudent extends Model
     /**
      * @var array
      */
-    protected $fillable = ['cre_at', 'upd_at','student_id', 'teacher_id'];
+    protected $fillable = ['cre_at', 'upd_at','student_id', 'class_id'];
 }

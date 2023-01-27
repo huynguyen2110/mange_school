@@ -16,6 +16,13 @@ import EditStudent from './components/student/edit';
 import CreateTeacher from './components/teacher/create';
 import EditTeacher from './components/teacher/edit';
 
+import CreateMajor from './components/major/create';
+import EditMajor from './components/major/edit';
+
+import CreateCourse from './components/course/create';
+import EditCourse from './components/course/edit';
+
+
 configure({
     validateOnBlur: true,
     validateOnChange: true,
@@ -49,6 +56,11 @@ app.component('create-student', CreateStudent);
 app.component('edit-student', EditStudent);
 app.component('create-teacher', CreateTeacher);
 app.component('edit-teacher', EditTeacher);
+app.component('create-major', CreateMajor);
+app.component('edit-major', EditMajor);
+app.component('create-course', CreateCourse);
+app.component('edit-course', EditCourse);
+
 
 app.component("notyf", Notyf);
 app.component("btn-delete-confirm", BtnDeleteConfirm);

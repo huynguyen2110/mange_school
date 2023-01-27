@@ -3,6 +3,8 @@
 namespace App\Repositories\Student;
 
 use App\Enums\UserRole;
+use App\Models\Course;
+use App\Models\Major;
 use App\Models\User;
 use App\Http\Controllers\BaseController;
 use App\Repositories\Student\StudentInterface;
@@ -15,9 +17,14 @@ use Nette\Utils\Paginator;
 class StudentRepository extends BaseController implements StudentInterface
 {
     private User $student;
-    public function __construct(User $student)
+    private Major $major;
+    private Course $course;
+
+    public function __construct(User $student, Major $major, Course $course)
     {
         $this->student = $student;
+        $this->major = $major;
+        $this->course = $course;
     }
 
     public function get($request)
@@ -64,8 +71,8 @@ class StudentRepository extends BaseController implements StudentInterface
             $student->gender = $request->gender;
             $student->phone = $request->phone;
             $student->address = $request->address;
-            $student->major_id = $request->major;
-            $student->course_id = $request->course;
+            $student->major_id = $request->major_id;
+            $student->course_id = $request->course_id;
             $student->year_of_admission = date("Y");
             $student->role = UserRole::Student;
 
@@ -82,8 +89,6 @@ class StudentRepository extends BaseController implements StudentInterface
             DB::rollBack();
             return false;
         }
-
-
     }
 
     public function update($request, $id)
@@ -100,8 +105,8 @@ class StudentRepository extends BaseController implements StudentInterface
             $student->gender = $request->gender;
             $student->phone = $request->phone;
             $student->address = $request->address;
-            $student->major_id = $request->major;
-            $student->course_id = $request->course;
+            $student->major_id = $request->major_id;
+            $student->course_id = $request->course_id;
             $student->year_of_admission = date("Y");
 
             if (! $student->save()) {
@@ -161,5 +166,16 @@ class StudentRepository extends BaseController implements StudentInterface
         }
 
         return true;
+    }
+
+    public function getMajors()
+    {
+        return $this->major->get();
+    }
+
+    public function getCourses()
+    {
+        return $this->course->get();
+
     }
 }

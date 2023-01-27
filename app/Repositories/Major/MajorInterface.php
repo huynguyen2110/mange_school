@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Repositories\Teacher;
+namespace App\Repositories\Major;
 
-interface TeacherInterface
+interface MajorInterface
 {
     public function get($request);
     public function getById($id);
     public function store($request);
     public function update($request, $id);
     public function destroy($id);
-    public function getMajors();
-    public function getCourses();
+    public function checkName($request);
 }

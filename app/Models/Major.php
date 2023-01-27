@@ -26,5 +26,5 @@ class Major extends Model
     /**
      * @var array
      */
-    protected $fillable = ['name', 'ministry_id', 'cre_at', 'upd_at'];
+    protected $fillable = ['name','founded_year', 'cre_at', 'upd_at'];
 }

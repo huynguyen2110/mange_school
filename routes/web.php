@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\MajorController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use Illuminate\Support\Facades\Route;
@@ -27,5 +29,11 @@ Route::resource('/students', StudentController::class);
 
 
 Route::resource('/teachers', TeacherController::class);
+
+Route::post('/majors/check-mail', [MajorController::class, 'checkName'])->name('majors.checkname');
+Route::resource('/majors', MajorController::class);
+
+Route::post('/courses/check-mail', [CourseController::class, 'checkName'])->name('courses.checkname');
+Route::resource('/courses', CourseController::class);
 
 

@@ -11,4 +11,6 @@ interface StudentInterface
     public function destroy($id);
     public function checkEmail($request);
     public function checkPhone($request);
+    public function getMajors();
+    public function getCourses();
 }

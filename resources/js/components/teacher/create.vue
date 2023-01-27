@@ -82,7 +82,7 @@
                                             <ErrorMessage class="error" name="password_old"/>
                                         </div>
                                         <div class="mb-4">
-                                            <label for="major" class="form-label"
+                                            <label for="major_id" class="form-label"
                                             >Ngành <span class="required-label">*</span></label
                                             >
                                             <Field
@@ -90,22 +90,23 @@
                                                 class="form-control"
                                                 as="select"
                                                 rules="required"
-                                                name="major"
-                                                v-model="model.major"
+                                                name="major_id"
+                                                v-model="model.major_id"
                                                 placeholder="Ngành"
-                                                id="major"
+                                                id="major_id"
                                             >
                                                 <option value="" disabled selected>
-                                                    Chọn ngành
+                                                    -- Chọn ngành --
                                                 </option>
-                                                <option value="1">
-                                                    Điện tử viễn thông
-                                                </option>
-                                                <option value="2">
-                                                    Công nghệ thông tin
+                                                <option
+                                                    v-for="item in this.data.major"
+                                                    :key="item.id"
+                                                    :value="item.id"
+                                                >
+                                                    {{ item.name }}
                                                 </option>
                                             </Field>
-                                            <ErrorMessage class="error" name="major"/>
+                                            <ErrorMessage class="error" name="major_id"/>
                                         </div>
 
                                         <div class="mb-4">
@@ -130,6 +131,7 @@
                                                     placeholder="1990 / 01 / 01"
                                                     :enableTimePicker="false"
                                                     vertical
+                                                    :max-date="new Date()"
                                                 />
                                             </Field>
                                             <ErrorMessage class="error" name="birthday"/>
@@ -149,7 +151,7 @@
                                                 v-model="model.gender"
                                             >
                                                 <option value="" disabled selected>
-                                                    Chọn giới tính
+                                                    -- Chọn giới tính --
                                                 </option>
                                                 <option value="0">
                                                     Nữ

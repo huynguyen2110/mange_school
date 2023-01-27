@@ -53,8 +53,8 @@ class TeacherRequest extends FormRequest
                     }
                 }),
             ],
-            'major' => 'required',
-            'birthday' => 'required',
+            'major_id' => 'required',
+            'birthday' => 'required|before_or_equal:now',
             'gender' => 'required',
             'address' => 'nullable|max:1024',
         ];

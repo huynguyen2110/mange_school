@@ -2,18 +2,33 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\StatusCode;
+use App\Http\Requests\CourseRequest;
+use App\Http\Requests\MajorRequest;
+use App\Repositories\Course\CourseInterface;
 use Illuminate\Http\Request;
 
 class CourseController extends BaseController
 {
+
+    private $course;
+
+    public function __construct(CourseInterface $course){
+        $this->course = $course;
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $users = $this->course->get($request);
+        return view('course.index',[
+            'users' => $users,
+            'newSizeLimit' => $this->newListLimit($request),
+            'request' => $request,
+        ]);
     }
 
     /**
@@ -23,7 +38,7 @@ class CourseController extends BaseController
      */
     public function create()
     {
-        //
+        return view('course.create');
     }
 
     /**
@@ -32,9 +47,18 @@ class CourseController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CourseRequest $request)
     {
-        //
+        $course = $this->course->store($request);
+
+        if (! $course) {
+            $this->setFlash(__('Thêm khóa thất bại'), 'error');
+
+            return redirect()->route('courses.create');
+        }
+        $this->setFlash(__('Thêm khóa thành công'));
+
+        return redirect(route('courses.index'));
     }
 
     /**
@@ -56,7 +80,16 @@ class CourseController extends BaseController
      */
     public function edit($id)
     {
-        //
+        $course = $this->course->getById($id);
+
+        if (! $this->course->getById($id)) {
+            $this->setFlash(__('Không tìm thấy khóa'), 'error');
+
+            return redirect(route('courses.index'));
+        }
+        return view('course.edit',[
+            'course' => $course,
+        ]);
     }
 
     /**
@@ -66,9 +99,17 @@ class CourseController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CourseRequest $request, $id)
     {
-        //
+        if ($this->course->update($request, $id)) {
+            $this->setFlash(__('Cập nhật thông tin khóa thành công'));
+
+            return redirect(route('courses.index'));
+        }
+
+        $this->setFlash(__('Cập nhật thông tin khóa thất bại thất bại'), 'error');
+
+        return redirect(route('courses.edit', $id));
     }
 
     /**
@@ -80,5 +121,15 @@ class CourseController extends BaseController
     public function destroy($id)
     {
         //
+    }
+
+    public function checkName(Request $request)
+    {
+        $data = $request->all();
+        $data['id'] = $request->id;
+
+        return response()->json([
+            'valid' => $this->course->checkName($data),
+        ], StatusCode::OK);
     }
 }
