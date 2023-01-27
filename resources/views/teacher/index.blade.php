@@ -55,8 +55,8 @@
                                             <td >{{$item->email}}</td>
                                             <td >11</td>
                                             <td >{{\App\Enums\UserRole::getDescription($item->role)}}</td>
-                                            <td>
-                                                <a class="btn btn-xs btn-info m-1" href="{{route('teachers.edit', $item->uuid)}}">
+                                            <td class="float-right">
+                                                <a class="btn btn-xs btn-info m-1 " href="{{route('teachers.edit', $item->uuid)}}">
                                                     Sửa
                                                 </a>
 

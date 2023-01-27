@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\MajorController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TeacherController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,4 +37,6 @@ Route::resource('/majors', MajorController::class);
 Route::post('/courses/check-mail', [CourseController::class, 'checkName'])->name('courses.checkname');
 Route::resource('/courses', CourseController::class);
 
+Route::post('/subjects/check-mail', [SubjectController::class, 'checkName'])->name('subjects.checkname');
+Route::resource('/subjects', SubjectController::class);
 

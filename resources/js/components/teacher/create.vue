@@ -252,7 +252,7 @@ export default {
                         unique_custom: "Email trùng với email đã đăng kí",
                         email: "Email không đúng với định dạng",
                     },
-                    major: {
+                    major_id: {
                         required: "Ngành không được để trống",
                     },
                     password: {

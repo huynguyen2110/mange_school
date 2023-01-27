@@ -16,14 +16,8 @@ class StudentController extends BaseController
 {
    private $student;
 
-   private $major;
-
-   private $course;
-
-    public function __construct(StudentInterface $student, MajorInterface $major, CourseInterface $course){
+    public function __construct(StudentInterface $student){
         $this->student = $student;
-        $this->major = $major;
-        $this->course = $course;
     }
 
     /**

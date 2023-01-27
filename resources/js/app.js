@@ -22,6 +22,9 @@ import EditMajor from './components/major/edit';
 import CreateCourse from './components/course/create';
 import EditCourse from './components/course/edit';
 
+import CreateSubject from './components/subject/create';
+import EditSubject from './components/subject/edit';
+
 
 configure({
     validateOnBlur: true,
@@ -60,6 +63,8 @@ app.component('create-major', CreateMajor);
 app.component('edit-major', EditMajor);
 app.component('create-course', CreateCourse);
 app.component('edit-course', EditCourse);
+app.component('create-subject', CreateSubject);
+app.component('edit-subject', EditSubject);
 
 
 app.component("notyf", Notyf);

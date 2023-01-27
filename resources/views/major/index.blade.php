@@ -50,7 +50,7 @@
                                         <tr>
                                             <td >{{$item->name}}</td>
                                             <td >{{$item->founded_year}}</td>
-                                            <td>
+                                            <td class="float-right">
                                                 <a class="btn btn-xs btn-info m-1" href="{{route('majors.edit', $item->id)}}">
                                                     Sửa
                                                 </a>

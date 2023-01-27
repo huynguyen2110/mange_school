@@ -27,4 +27,9 @@ class Subject extends Model
      * @var array
      */
     protected $fillable = ['name', 'major_id', 'cre_at', 'upd_at'];
+
+    public function majors()
+    {
+        return $this->belongsTo(Major::class,'major_id','id');
+    }
 }
