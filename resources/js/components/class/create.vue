@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid">
         <div class="path d-flex aline-flex-end">
-            <h3 class="list mb-4 d-flex align-self-end ml-2">Chỉnh sửa môn học</h3>
+            <h3 class="list mb-4 d-flex align-self-end ml-2">Thêm lớp học</h3>
         </div>
         <div class="fade-in">
             <div class="row">
@@ -18,10 +18,9 @@
                                         method="POST"
                                         @submit="handleSubmit($event, onSubmit)"
                                         ref="formData"
-                                        :action="data.urlUpdate"
+                                        :action="data.urlStore"
                                     >
                                         <input type="hidden" :value="csrfToken" name="_token"/>
-                                        <input type="hidden" value="PUT" name="_method" />
                                         <div class="mb-4">
                                             <label for="name" class="form-label"
                                             >Tên <span class="required-label">*</span></label
@@ -38,32 +37,60 @@
                                             <ErrorMessage class="error" name="name"/>
                                         </div>
                                         <div class="mb-4">
-                                            <label for="major_id" class="form-label"
-                                            >Ngành <span class="required-label">*</span></label
+                                            <label for="subject_id" class="form-label"
+                                            >Môn học <span class="required-label">*</span></label
                                             >
                                             <Field
                                                 type="text"
                                                 class="form-control"
                                                 as="select"
                                                 rules="required"
-                                                name="major_id"
-                                                v-model="model.major_id"
-                                                placeholder="Ngành"
-                                                id="major_id"
+                                                name="subject_id"
+                                                v-model="model.subject_id"
+                                                placeholder="Môn học"
+                                                id="subject_id"
                                             >
                                                 <option value="" disabled selected>
-                                                    -- Chọn ngành --
+                                                    -- Chọn môn học --
                                                 </option>
                                                 <option
-                                                    v-for="item in this.data.major"
+                                                    v-for="item in this.data.subject"
                                                     :key="item.id"
                                                     :value="item.id"
                                                 >
                                                     {{ item.name }}
                                                 </option>
                                             </Field>
-                                            <ErrorMessage class="error" name="major_id"/>
+                                            <ErrorMessage class="error" name="subject_id"/>
                                         </div>
+                                        <div class="mb-4">
+                                            <label for="teacher_id" class="form-label"
+                                            >Giảng viên <span class="required-label">*</span></label
+                                            >
+                                            <Field
+                                                type="text"
+                                                class="form-control"
+                                                as="select"
+                                                rules="required"
+                                                name="teacher_id"
+                                                v-model="model.teacher_id"
+                                                id="teacher_id"
+                                            >
+                                                <option value="" disabled selected>
+                                                    -- Chọn giảng viên --
+                                                </option>
+                                                <option
+                                                    v-for="item in this.data.teacher"
+                                                    :key="item.uuid"
+                                                    :value="item.uuid"
+                                                >
+                                                    {{ item.name }}
+                                                </option>
+                                            </Field>
+                                            <ErrorMessage class="error" name="teacher_id"/>
+                                        </div>
+
+
                                         <div class="text-center">
                                             <a
                                                 class="btn btn-outline-secondary btn-back"
@@ -115,8 +142,11 @@ export default {
                         max: "Tên không được nhập quá 128 kí tự",
                         unique_custom_name: "Tên trùng với tên đã đăng kí"
                     },
-                    major_id: {
+                    subject_id: {
                         required: "Ngành không được để trống",
+                    },
+                    teacher_id: {
+                        required: "Giảng viên không được để trống",
                     },
                 },
             },
@@ -129,7 +159,6 @@ export default {
             return axios
                 .post(that.data.urlCheckName, {
                     _token: Laravel.csrfToken,
-                    id: that.data.subject.id,
                     value: value,
                 })
                 .then(function (response) {
@@ -141,7 +170,7 @@ export default {
     data: function () {
         return{
             csrfToken: Laravel.csrfToken,
-            model: this.data.subject,
+            model: {},
             flagShowLoader: false,
         }
     },

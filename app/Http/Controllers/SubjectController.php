@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\StatusCode;
+use App\Http\Requests\SubjectRequest;
 use App\Repositories\Subject\SubjectInterface;
 use Illuminate\Http\Request;
 
@@ -45,7 +46,7 @@ class SubjectController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SubjectRequest $request)
     {
         $subject = $this->subject->store($request);
 
@@ -99,7 +100,7 @@ class SubjectController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(SubjectRequest $request, $id)
     {
         if ($this->subject->update($request, $id)) {
             $this->setFlash(__('Cập nhật thông tin môn thành công'));

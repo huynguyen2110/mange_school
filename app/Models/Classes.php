@@ -28,4 +28,14 @@ class Classes extends Model
      * @var array
      */
     protected $fillable = ['name', 'subject_id', 'teacher_id', 'cre_at', 'upd_at'];
+
+    public function teachers()
+    {
+        return $this->belongsTo(User::class,'teacher_id','uuid');
+    }
+
+    public function subjects()
+    {
+        return $this->belongsTo(Subject::class,'subject_id','id');
+    }
 }

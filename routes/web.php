@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ClassController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\MajorController;
 use App\Http\Controllers\StudentController;
@@ -40,3 +41,5 @@ Route::resource('/courses', CourseController::class);
 Route::post('/subjects/check-mail', [SubjectController::class, 'checkName'])->name('subjects.checkname');
 Route::resource('/subjects', SubjectController::class);
 
+Route::post('/classes/check-mail', [ClassController::class, 'checkName'])->name('classes.checkname');
+Route::resource('/classes', ClassController::class);

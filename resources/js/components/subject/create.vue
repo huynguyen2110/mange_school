@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid">
         <div class="path d-flex aline-flex-end">
-            <h3 class="list mb-4 d-flex align-self-end ml-2">Thêm ngành học</h3>
+            <h3 class="list mb-4 d-flex align-self-end ml-2">Thêm môn học</h3>
         </div>
         <div class="fade-in">
             <div class="row">

@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repositories\Classes\ClassInterface;
+use App\Repositories\Classes\ClassRepository;
 use App\Repositories\Course\CourseInterface;
 use App\Repositories\Course\CourseRepository;
 use App\Repositories\Major\MajorInterface;
@@ -31,6 +33,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(MajorInterface::class, MajorRepository::class);
         $this->app->bind(CourseInterface::class, CourseRepository::class);
         $this->app->bind(SubjectInterface::class, SubjectRepository::class);
+        $this->app->bind(ClassInterface::class, ClassRepository::class);
     }
 
     /**
