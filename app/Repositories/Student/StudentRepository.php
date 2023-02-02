@@ -35,6 +35,12 @@ class StudentRepository extends BaseController implements StudentInterface
             ->where('role', UserRole::Student)
             ->orderBy('cre_at', 'desc');
 
+        if($request->class){
+            $studentBuilder = $studentBuilder->join('class_students', 'users.uuid', 'class_students.student_id')
+                ->where('class_students.class_id', $request->class)
+                ->select('users.*');
+        }
+
         if (isset($request['search_input'])) {
             $studentBuilder = $studentBuilder->where(function ($q) use ($request) {
                 $q->orWhere($this->escapeLikeSentence('name', $request['search_input']));

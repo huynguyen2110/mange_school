@@ -167,6 +167,14 @@ class ClassRepository extends BaseController implements ClassInterface
 
     public function cancelClass($request)
     {
+        $class = $this->classStudent
+            ->where('student_id', $request->student_id)
+            ->where('class_id', $request->class_id)
+            ->first();
+        if (! $class) {
+            return false;
+        }
 
+        return $class->delete();
     }
 }

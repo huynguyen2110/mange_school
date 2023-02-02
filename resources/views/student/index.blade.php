@@ -55,8 +55,16 @@
                                             <td >{{$item->name}}</td>
                                             <td >{{$item->email}}</td>
                                             <td >{{$item->phone}}</td>
-                                            <td >{{$item->majors->name}}</td>
-                                            <td >{{$item->courses->name}}</td>
+                                            @if($item->majors)
+                                                <td >{{$item->majors->name}}</td>
+                                            @else
+                                                <td></td>
+                                            @endif
+                                            @if($item->courses)
+                                                <td >{{$item->courses->name}}</td>
+                                            @else
+                                                <td></td>
+                                            @endif
                                             <td class="float-right">
                                                 <a class="btn btn-xs btn-info m-1 " href="{{route('students.edit', $item->uuid)}}">
                                                     Sửa

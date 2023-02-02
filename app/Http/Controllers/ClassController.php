@@ -156,6 +156,13 @@ class ClassController extends BaseController
 
     public function cancelClass(Request $request)
     {
-
+        if ($this->class->CancelClass($request)) {
+            return response()->json([
+                'message' => 'Hủy đăng kí thành công',
+            ], StatusCode::OK);
+        }
+        return response()->json([
+            'message' => 'Có lỗi xảy ra',
+        ], StatusCode::INTERNAL_ERR);
     }
 }

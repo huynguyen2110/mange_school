@@ -54,11 +54,14 @@
                                             <td >{{$item->subjects->name}}</td>
                                             <td >{{$item->teachers->name}}</td>
                                             <td class="float-right">
-                                                @if(false)
+                                                @if(true)
                                                 <a  class="btn btn-xs btn-info m-1 " href="{{route('classes.edit', $item->id)}}">
                                                     Sửa
                                                 </a>
-                                                @else
+                                                <a  class="btn btn-success" href="{{route('students.index', "class=$item->id")}}">
+                                                    Xem thông tin lớp
+                                                </a>
+
                                                     <?php
                                                         $account = \App\Models\ClassStudent::where('class_id', $item->id)->where('student_id', \Illuminate\Support\Facades\Auth::user()->uuid)->first();
                                                     ?>
@@ -71,7 +74,13 @@
                                                         >
                                                         </btn-register-class>
                                                     @else
-                                                        <button class="btn btn-danger" disabled>Hủy đăng kí</button>
+                                                            <btn-cancel-class
+                                                                :message-confirm="{{ json_encode('Bạn có muốn hủy đăng kí lớp này không？') }}"
+                                                                :cancel-action="{{ json_encode(route('classes.cancel-class')) }}"
+                                                                :class-id="{{ json_encode($item->id) }}"
+                                                                :student-uuid= "{{ json_encode($currentUser) }}"
+                                                            >
+                                                            </btn-cancel-class>
                                                     @endif
                                                 @endif
                                             </td>
