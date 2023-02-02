@@ -38,8 +38,12 @@ Route::group([
     'middleware' => 'auth',
 ], function () {
     Route::resource('/admin', AdminController::class);
+
     Route::post('/students/check-mail', [StudentController::class, 'checkMail'])->name('students.checkmail');
     Route::post('/students/check-phone', [StudentController::class, 'checkPhone'])->name('students.checkphone');
+    Route::get('/students/score', [StudentController::class, 'score'])->name('students.score');
+    Route::post('/students/insert-score', [StudentController::class, 'insertScore'])->name('students.insert-score');
+    Route::post('/students/update-score', [StudentController::class, 'updateScore'])->name('students.update-score');
     Route::resource('/students', StudentController::class);
 
 

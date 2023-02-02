@@ -82,6 +82,12 @@
                                                     Sửa
                                                 </a>
 
+                                                @if($request->class)
+                                                    <a class="btn btn-success" href="{{route('students.score',["student=$item->uuid", "class=$request->class"])}}">
+                                                        Nhập điểm
+                                                    </a>
+                                                @endif
+
                                                 <btn-delete-confirm
                                                     :message-confirm="{{ json_encode('Bạn có muốn xóa sinh viên này không？') }}"
                                                     :delete-action="{{ json_encode(route('students.destroy', $item->uuid)) }}">

@@ -23,7 +23,7 @@ class CreateScoresTable extends Migration
             $table->string('total', 10)->nullable();
             $table->dateTime('cre_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->dateTime('upd_at')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->unique(['student_id', 'class_id', 'midterm_score', 'final_score']);
+            $table->unique(['student_id', 'class_id']);
         });
     }
 

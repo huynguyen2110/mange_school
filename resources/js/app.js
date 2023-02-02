@@ -18,6 +18,7 @@ import BtnRegisterAlreadyClass from "./components/class/btnRegisterAlreadyClass"
 
 import CreateStudent from './components/student/create';
 import EditStudent from './components/student/edit';
+import InsertScore from './components/student/insertScore';
 
 import CreateTeacher from './components/teacher/create';
 import EditTeacher from './components/teacher/edit';
@@ -82,6 +83,7 @@ app.component('edit-class', EditClass);
 app.component('login', Login);
 app.component('forgot-password', ForgotPassword);
 app.component('reset-password', ResetPassword);
+app.component('insert-score', InsertScore);
 
 
 app.component("notyf", Notyf);

@@ -3,8 +3,10 @@
 namespace App\Repositories\Student;
 
 use App\Enums\UserRole;
+use App\Models\Classes;
 use App\Models\Course;
 use App\Models\Major;
+use App\Models\Score;
 use App\Models\User;
 use App\Http\Controllers\BaseController;
 use App\Repositories\Student\StudentInterface;
@@ -19,12 +21,16 @@ class StudentRepository extends BaseController implements StudentInterface
     private User $student;
     private Major $major;
     private Course $course;
+    private Score $score;
+    private Classes $class;
 
-    public function __construct(User $student, Major $major, Course $course)
+    public function __construct(User $student, Major $major, Course $course, Score $score, Classes $class)
     {
         $this->student = $student;
         $this->major = $major;
         $this->course = $course;
+        $this->score = $score;
+        $this->class = $class;
     }
 
     public function get($request)
@@ -182,5 +188,70 @@ class StudentRepository extends BaseController implements StudentInterface
     {
         return $this->course->get();
 
+    }
+
+    public function insertScore($request)
+    {
+        try {
+            DB::beginTransaction();
+
+            $score = new $this->score();
+            $score->class_id = $request->class_id;
+            $score->student_id = $request->student_id;
+            $score->midterm_score = $request->midterm_score;
+            $score->final_score = $request->final_score;
+            $score->total = $request->total;
+
+
+            if (! $score->save()) {
+                DB::rollBack();
+
+                return false;
+            }
+            DB::commit();
+            return true;
+        }
+        catch (\Exception $e){
+            dd($e->getMessage());
+            DB::rollBack();
+            return false;
+        }
+    }
+
+    public function updateScore($request)
+    {
+        try {
+            DB::beginTransaction();
+
+            $score = $this->score->where('class_id', $request->class_id)->where('student_id', $request->student_id)->first();
+
+            $score->midterm_score = $request->midterm_score;
+            $score->final_score = $request->final_score;
+            $score->total = $request->total;
+
+
+            if (! $score->save()) {
+                DB::rollBack();
+
+                return false;
+            }
+            DB::commit();
+            return true;
+        }
+        catch (\Exception $e){
+            dd($e->getMessage());
+            DB::rollBack();
+            return false;
+        }
+    }
+
+    public function getClassById($id)
+    {
+        return $this->class->where('id', $id)->first();
+    }
+
+    public function getInfoByClassStudent($class, $student)
+    {
+        return $this->score->where('class_id', $class)->where('student_id', $student)->first();
     }
 }

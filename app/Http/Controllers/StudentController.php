@@ -166,4 +166,54 @@ class StudentController extends BaseController
             'valid' => $this->student->checkPhone($data),
         ], StatusCode::OK);
     }
+
+    public function score(Request $request)
+    {
+        $isEdit = false;
+        $score = [];
+        if($this->student->getInfoByClassStudent($request->class, $request->student)){
+            $isEdit = true;
+            $score = $this->student->getInfoByClassStudent($request->class, $request->student);
+        }
+        if($this->student->getById($request->student) && $this->student->getClassById($request->class)){
+            return view('student.insertScore',[
+                'student_id' => $request->student,
+                'class_id' => $request->class,
+                'isEdit' => $isEdit,
+                'score' => $score,
+            ]);
+        }
+        else{
+            $this->setFlash(__('Có lỗi xảy ra'), 'error');
+
+            return redirect(route('students.index'));
+        }
+
+    }
+
+    public function insertScore(Request $request)
+    {
+        if ($this->student->insertScore($request)) {
+            $this->setFlash(__('Nhập điểm thành công'));
+
+            return redirect(route('students.index',"class=$request->class_id"));
+        }
+
+        $this->setFlash(__('Nhập điểm thất bại'), 'error');
+
+        return redirect(route('students.score',["student=$request->student_id", "class=$request->class_id"]));
+    }
+
+    public function updateScore(Request $request)
+    {
+        if ($this->student->updateScore($request)) {
+            $this->setFlash(__('Nhập điểm thành công'));
+
+            return redirect(route('students.index',"class=$request->class_id"));
+        }
+
+        $this->setFlash(__('Nhập điểm thất bại'), 'error');
+
+        return redirect(route('students.score',["student=$request->student_id", "class=$request->class_id"]));
+    }
 }

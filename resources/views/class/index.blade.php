@@ -56,12 +56,12 @@
                                             <td >{{$item->teachers->name}}</td>
                                             <td class="float-right">
                                                 @if(true)
-                                                <a  class="btn btn-xs btn-info m-1 " href="{{route('classes.edit', $item->id)}}">
-                                                    Sửa
-                                                </a>
-                                                <a  class="btn btn-success" href="{{route('students.index', "class=$item->id")}}">
-                                                    Xem thông tin lớp
-                                                </a>
+                                                    <a  class="btn btn-xs btn-info m-1 " href="{{route('classes.edit', $item->id)}}">
+                                                        Sửa
+                                                    </a>
+                                                    <a  class="btn btn-success" href="{{route('students.index', "class=$item->id")}}">
+                                                        Nhập điểm
+                                                    </a>
 
                                                     <?php
                                                         $register = \App\Models\ClassStudent::where('class_id', $item->id)->where('student_id', \Illuminate\Support\Facades\Auth::user()->uuid)->first();

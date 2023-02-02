@@ -13,4 +13,8 @@ interface StudentInterface
     public function checkPhone($request);
     public function getMajors();
     public function getCourses();
+    public function insertScore($request);
+    public function updateScore($request);
+    public function getClassById($id);
+    public function getInfoByClassStudent($class, $student);
 }
