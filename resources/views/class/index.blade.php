@@ -54,9 +54,26 @@
                                             <td >{{$item->subjects->name}}</td>
                                             <td >{{$item->teachers->name}}</td>
                                             <td class="float-right">
-                                                <a class="btn btn-xs btn-info m-1 " href="{{route('classes.edit', $item->id)}}">
+                                                @if(false)
+                                                <a  class="btn btn-xs btn-info m-1 " href="{{route('classes.edit', $item->id)}}">
                                                     Sửa
                                                 </a>
+                                                @else
+                                                    <?php
+                                                        $account = \App\Models\ClassStudent::where('class_id', $item->id)->where('student_id', \Illuminate\Support\Facades\Auth::user()->uuid)->first();
+                                                    ?>
+                                                    @if(!$account)
+                                                        <btn-register-class
+                                                            :message-confirm="{{ json_encode('Bạn có muốn đăng kí vào lớp này không？') }}"
+                                                            :register-action="{{ json_encode(route('classes.register-class')) }}"
+                                                            :class-id="{{ json_encode($item->id) }}"
+                                                            :student-uuid= "{{ json_encode($currentUser) }}"
+                                                        >
+                                                        </btn-register-class>
+                                                    @else
+                                                        <button class="btn btn-danger" disabled>Hủy đăng kí</button>
+                                                    @endif
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach

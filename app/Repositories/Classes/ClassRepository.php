@@ -4,6 +4,7 @@ namespace App\Repositories\Classes;
 
 use App\Enums\UserRole;
 use App\Models\Classes;
+use App\Models\ClassStudent;
 use App\Models\Subject;
 use App\Models\User;
 use App\Http\Controllers\BaseController;
@@ -17,13 +18,15 @@ class ClassRepository extends BaseController implements ClassInterface
     private Classes $class;
     private Subject $subject;
     private User $teacher;
+    private ClassStudent $classStudent;
 
 
-    public function __construct(Classes $class, Subject $subject, User $teacher)
+    public function __construct(Classes $class, Subject $subject, User $teacher, ClassStudent $classStudent)
     {
         $this->class = $class;
         $this->subject = $subject;
         $this->teacher = $teacher;
+        $this->classStudent = $classStudent;
     }
 
     public function get($request)
@@ -137,5 +140,33 @@ class ClassRepository extends BaseController implements ClassInterface
         }
 
         return true;
+    }
+
+    public function storeRegisterClass($request)
+    {
+        try {
+            DB::beginTransaction();
+
+            $classStudent = new $this->classStudent();
+            $classStudent->student_id = $request->student_id;
+            $classStudent->class_id = $request->class_id;
+
+            if (! $classStudent->save()) {
+                DB::rollBack();
+
+                return false;
+            }
+            DB::commit();
+            return true;
+        }
+        catch (\Exception $e){
+            DB::rollBack();
+            return false;
+        }
+    }
+
+    public function cancelClass($request)
+    {
+
     }
 }

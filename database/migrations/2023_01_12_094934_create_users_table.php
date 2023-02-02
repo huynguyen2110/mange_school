@@ -27,6 +27,9 @@ class CreateUsersTable extends Migration
             $table->string('gender', 128)->nullable();
             $table->string('phone', 24)->nullable()->unique();
             $table->string('address', 1024)->nullable();
+            $table->string('reset_password_token')->nullable();
+            $table->dateTime('reset_password_token_expire')->nullable();
+            $table->rememberToken();
             $table->dateTime('cre_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->dateTime('upd_at')->default(DB::raw('CURRENT_TIMESTAMP'));
         });

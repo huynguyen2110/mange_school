@@ -15,6 +15,7 @@ class CreateScoresTable extends Migration
     public function up()
     {
         Schema::create('scores', function (Blueprint $table) {
+            $table->id();
             $table->string('class_id', 128);
             $table->string('student_id', 128);
             $table->string('midterm_score', 10)->nullable();
@@ -22,7 +23,7 @@ class CreateScoresTable extends Migration
             $table->string('total', 10)->nullable();
             $table->dateTime('cre_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->dateTime('upd_at')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->primary(['student_id', 'class_id', 'midterm_score', 'final_score']);
+            $table->unique(['student_id', 'class_id', 'midterm_score', 'final_score']);
         });
     }
 

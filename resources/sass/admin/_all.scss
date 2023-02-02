@@ -11,3 +11,48 @@
     margin-top: 5px;
     margin-left: 5px;
 }
+.c-wrapper {
+    background-color: white;
+}
+.login {
+    .form-login {
+        max-width: 585px;
+
+    }
+    .p-4 {
+        border-radius: 1.25rem;
+        background-color: rgb(233, 233, 233, 20%);
+        border: 1px solid gray;
+    }
+    .avatar {
+        display: block;
+        position: relative;
+        height: 300px;
+        width: 300px;
+        border-radius: 50%;
+        border: 1px solid gray;
+        margin: 85px auto 109px auto;
+        background-color: white;
+        &-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2.25rem;
+            //font-family: " Yu-Gothic";
+            font-weight: 400;
+            line-height: 48px;
+            color: black;
+        }
+
+    }
+    .btn-blue {
+        display: block;
+        margin: 0 auto;
+    }
+
+}
+#app {
+    width: 100%;
+}
+

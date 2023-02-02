@@ -15,11 +15,12 @@ class CreateClassStudentsTable extends Migration
     public function up()
     {
         Schema::create('class_students', function (Blueprint $table) {
+            $table->id();
             $table->string('student_id', 128);
             $table->string('class_id', 128);
             $table->dateTime('cre_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->dateTime('upd_at')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->primary(['student_id', 'class_id']);
+            $table->unique(['student_id', 'class_id']);
         });
     }
 

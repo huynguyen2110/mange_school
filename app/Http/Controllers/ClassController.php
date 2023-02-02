@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Enums\StatusCode;
 use App\Http\Requests\ClassRequest;
+use App\Models\ClassStudent;
 use App\Repositories\Classes\ClassInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ClassController extends BaseController
 {
@@ -18,11 +20,13 @@ class ClassController extends BaseController
 
     public function index(Request $request)
     {
+
         $users = $this->class->get($request);
         return view('class.index',[
             'users' => $users,
             'newSizeLimit' => $this->newListLimit($request),
             'request' => $request,
+            'currentUser' => Auth::user()->uuid,
         ]);
     }
 
@@ -136,5 +140,22 @@ class ClassController extends BaseController
         return response()->json([
             'valid' => $this->class->checkName($data),
         ], StatusCode::OK);
+    }
+
+    public function registerClass(Request $request)
+    {
+        if ($this->class->storeRegisterClass($request)) {
+            return response()->json([
+                'message' => 'Đã đăng kí thành công',
+            ], StatusCode::OK);
+        }
+        return response()->json([
+            'message' => 'Có lỗi xảy ra',
+        ], StatusCode::INTERNAL_ERR);
+    }
+
+    public function cancelClass(Request $request)
+    {
+
     }
 }

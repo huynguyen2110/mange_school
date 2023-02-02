@@ -12,4 +12,6 @@ interface ClassInterface
     public function getSubjects();
     public function getTeachers();
     public function checkName($request);
+    public function storeRegisterClass($request);
+    public function cancelClass($request);
 }

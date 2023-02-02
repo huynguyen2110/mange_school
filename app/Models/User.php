@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
  * @property string $uuid
@@ -20,7 +21,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $cre_at
  * @property string $upd_at
  */
-class User extends Model
+class User extends Authenticatable
 {
 
     const CREATED_AT = 'cre_at';

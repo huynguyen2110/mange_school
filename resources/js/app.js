@@ -1,3 +1,5 @@
+
+
 require('./bootstrap');
 
 import { configure, defineRule } from "vee-validate";
@@ -9,6 +11,7 @@ import Notyf from "./components/common/notyf.vue";
 import Welcome from './components/Welcome.vue';
 import LimitPageOption from './components/common/limitPageOption.vue';
 import BtnDeleteConfirm from './components/common/btnDeleteConfirm.vue';
+import BtnRegisterClass from './components/common/btnRegisterClass';
 
 import CreateStudent from './components/student/create';
 import EditStudent from './components/student/edit';
@@ -27,6 +30,10 @@ import EditSubject from './components/subject/edit';
 
 import CreateClass from './components/class/create';
 import EditClass from './components/class/edit';
+
+import Login from './components/login/index';
+import ForgotPassword from './components/forgot-password/index';
+import ResetPassword from './components/reset-password/index';
 
 configure({
     validateOnBlur: true,
@@ -69,10 +76,14 @@ app.component('create-subject', CreateSubject);
 app.component('edit-subject', EditSubject);
 app.component('create-class', CreateClass);
 app.component('edit-class', EditClass);
+app.component('login', Login);
+app.component('forgot-password', ForgotPassword);
+app.component('reset-password', ResetPassword);
 
 
 app.component("notyf", Notyf);
 app.component("btn-delete-confirm", BtnDeleteConfirm);
+app.component("btn-register-class", BtnRegisterClass);
 app.use(VueSweetalert2);
 
 app.mount('#app');

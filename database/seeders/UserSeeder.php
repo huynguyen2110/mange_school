@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Faker\Generator;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
@@ -21,15 +22,15 @@ class UserSeeder extends Seeder
         $faker = app(Generator::class);
 //        $arrayRole = UserRole::getValue();
 
-        for ($i = 0; $i < 300; $i++) {
+        for ($i = 0; $i < 1; $i++) {
             $dataSeeders = [
                 [
                     'uuid' => Base::generateUuid('user'),
                     'name' => 'user'.$i,
-                    'email' => $faker->unique()->safeEmail(),
-                    'role' => '2',
+                    'email' => 'huy1@gmail.com',
+                    'role' => '0',
                     'phone' => $faker->phoneNumber,
-                    'password' => '12345678',
+                    'password' => Hash::make('password'),
                 ],
             ];
             DB::table('users')->insert($dataSeeders);
