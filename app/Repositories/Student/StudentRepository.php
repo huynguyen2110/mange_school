@@ -42,7 +42,9 @@ class StudentRepository extends BaseController implements StudentInterface
             ->orderBy('cre_at', 'desc');
 
         if($request->class){
-            $studentBuilder = $studentBuilder->join('class_students', 'users.uuid', 'class_students.student_id')
+            $studentBuilder = $studentBuilder
+                ->join('class_students', 'users.uuid', 'class_students.student_id')
+                ->with('scores')
                 ->where('class_students.class_id', $request->class)
                 ->select('users.*');
         }

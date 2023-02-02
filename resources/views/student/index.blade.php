@@ -55,9 +55,13 @@
                                     <tr>
                                         <th >Tên</th>
                                         <th >Email</th>
-                                        <th >Số điện thoại</th>
                                         <th >Ngành</th>
                                         <th >Khóa</th>
+                                        @if($request->class)
+                                            <th >Điểm giữa kì</th>
+                                            <th >Điểm cuối kì</th>
+                                            <th >Tổng điểm</th>
+                                        @endif
                                         <th></th>
                                     </tr>
                                     </thead>
@@ -66,7 +70,6 @@
                                         <tr>
                                             <td >{{$item->name}}</td>
                                             <td >{{$item->email}}</td>
-                                            <td >{{$item->phone}}</td>
                                             @if($item->majors)
                                                 <td >{{$item->majors->name}}</td>
                                             @else
@@ -77,6 +80,20 @@
                                             @else
                                                 <td></td>
                                             @endif
+                                            @if($request->class)
+                                                <?php
+                                                    $score = $item->scores->where('class_id',$request->class)->first()
+                                                ?>
+
+                                                <td>{{$score->midterm_score}}</td>
+                                                <td>{{$score->final_score}}</td>
+                                                <td>{{$score->total}}</td>
+                                            @else
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            @endif
+
                                             <td class="float-right">
                                                 <a class="btn btn-xs btn-info m-1 " href="{{route('students.edit', $item->uuid)}}">
                                                     Sửa

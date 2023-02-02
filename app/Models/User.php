@@ -62,4 +62,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Course::class,'course_id','id');
     }
+
+    public function scores()
+    {
+        return $this->hasmany(Score::class,'student_id','uuid');
+    }
 }
