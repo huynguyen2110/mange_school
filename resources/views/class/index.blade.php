@@ -1,5 +1,6 @@
 @php
     use App\Components\SearchQueryComponent;
+    use App\Components
 @endphp
 
 @extends('layouts.admin')
@@ -63,16 +64,31 @@
                                                 </a>
 
                                                     <?php
-                                                        $account = \App\Models\ClassStudent::where('class_id', $item->id)->where('student_id', \Illuminate\Support\Facades\Auth::user()->uuid)->first();
+                                                        $register = \App\Models\ClassStudent::where('class_id', $item->id)->where('student_id', \Illuminate\Support\Facades\Auth::user()->uuid)->first();
+                                                        $checkClass = \App\Models\Classes::join('class_students','classes.id','class_students.class_id')
+                                                            ->where('classes.subject_id', $item->subject_id)
+                                                            ->where('student_id', \Illuminate\Support\Facades\Auth::user()->uuid)
+                                                            ->get('class_students.*')
+                                                            ->count();
                                                     ?>
-                                                    @if(!$account)
-                                                        <btn-register-class
-                                                            :message-confirm="{{ json_encode('Bạn có muốn đăng kí vào lớp này không？') }}"
-                                                            :register-action="{{ json_encode(route('classes.register-class')) }}"
-                                                            :class-id="{{ json_encode($item->id) }}"
-                                                            :student-uuid= "{{ json_encode($currentUser) }}"
-                                                        >
-                                                        </btn-register-class>
+                                                    @if(!$register)
+                                                        @if($checkClass == 0)
+                                                            <btn-register-class
+                                                                :message-confirm="{{ json_encode('Bạn có muốn đăng kí vào lớp này không？') }}"
+                                                                :register-action="{{ json_encode(route('classes.register-class')) }}"
+                                                                :class-id="{{ json_encode($item->id) }}"
+                                                                :student-uuid= "{{ json_encode($currentUser) }}"
+                                                            >
+                                                            </btn-register-class>
+                                                        @else
+                                                            <btn-register-already-class
+                                                                :message-confirm="{{ json_encode('Trùng với môn học đã đăng kí') }}"
+                                                                :register-action="{{ json_encode(route('classes.register-class')) }}"
+                                                                :class-id="{{ json_encode($item->id) }}"
+                                                                :student-uuid= "{{ json_encode($currentUser) }}"
+                                                            >
+                                                            </btn-register-already-class>
+                                                        @endif
                                                     @else
                                                             <btn-cancel-class
                                                                 :message-confirm="{{ json_encode('Bạn có muốn hủy đăng kí lớp này không？') }}"

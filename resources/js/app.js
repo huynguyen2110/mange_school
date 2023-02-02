@@ -11,8 +11,10 @@ import Notyf from "./components/common/notyf.vue";
 import Welcome from './components/Welcome.vue';
 import LimitPageOption from './components/common/limitPageOption.vue';
 import BtnDeleteConfirm from './components/common/btnDeleteConfirm.vue';
-import BtnRegisterClass from './components/common/btnRegisterClass';
-import BtnCancelClass from './components/common/btnCancelClass';
+import BtnRegisterClass from './components/class/btnRegisterClass';
+import BtnCancelClass from './components/class/btnCancelClass';
+import BtnRegisterAlreadyClass from "./components/class/btnRegisterAlreadyClass";
+
 
 import CreateStudent from './components/student/create';
 import EditStudent from './components/student/edit';
@@ -86,6 +88,7 @@ app.component("notyf", Notyf);
 app.component("btn-delete-confirm", BtnDeleteConfirm);
 app.component("btn-register-class", BtnRegisterClass);
 app.component("btn-cancel-class", BtnCancelClass);
+app.component("btn-register-already-class", BtnRegisterAlreadyClass);
 app.use(VueSweetalert2);
 
 app.mount('#app');

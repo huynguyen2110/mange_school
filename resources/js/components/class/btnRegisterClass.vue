@@ -1,12 +1,12 @@
 <template>
-    <a class="btn btn-danger m-1" @click="showAlert" >
-        Hủy đăng kí
+    <a class="btn btn-secondary m-1" @click="showAlert" >
+        Đăng kí học
     </a>
     <loader :flag-show="flagShowLoader"></loader>
 </template>
 
 <script>
-import Loader from "./loader.vue";
+import Loader from "../common/loader.vue";
 import axios from "axios";
 import $ from "jquery";
 
@@ -19,9 +19,8 @@ export default {
     components: {
         Loader,
     },
-    props: ["cancelAction", "listUrl", "messageConfirm", "classId", "studentUuid"],
+    props: ["registerAction", "listUrl", "messageConfirm", "classId", "studentUuid"],
     mounted() {
-
     },
     methods: {
         showAlert() {
@@ -31,7 +30,7 @@ export default {
                     '<p style="font-size: 25px;">' +
                     that.messageConfirm +
                     "</p>",
-                icon: "warning",
+                icon: "info",
                 confirmButtonText: "Có",
                 confirmButtonColor: "#E55656",
                 cancelButtonText: "Quay lại",
@@ -43,7 +42,7 @@ export default {
                     that.flagShowLoader = true;
                     $(".loading-div").removeClass("hidden");
                     axios
-                        .post(that.cancelAction, {
+                        .post(that.registerAction, {
                             _token: Laravel.csrfToken,
                             class_id: that.classId,
                             student_id: that.studentUuid
@@ -62,7 +61,7 @@ export default {
                                 confirmButtonClass:
                                     "btn btn-warning btn-radius-auto",
                             }).then(function () {
-                                window.location.href = that.listUrl;
+                                  // window.location.href = that.listUrl;
                                 location.reload();
                             });
                         })

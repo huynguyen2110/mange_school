@@ -7,8 +7,20 @@
 @section('content')
     <div class="container-fluid">
         <div class="path d-flex aline-flex-end">
-            <h3 class="list mb-4 d-flex align-self-end ml-2">Quản lí sinh viên</h3>
+            <h3 class="list mb-4 d-flex align-self-end ml-2">
+                Quản lí sinh viên
+            </h3>
+
+
         </div>
+        @if($request->class)
+            <?php
+                $class = \App\Models\Classes::where('id', $request->class)->first();
+            ?>
+            <h4 class="list mb-4 d-flex align-self-end ml-2">
+                Sinh viên lớp {{$class->name}}
+            </h4>
+        @endif
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
