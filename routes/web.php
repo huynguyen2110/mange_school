@@ -49,16 +49,17 @@ Route::group([
 
     Route::resource('/teachers', TeacherController::class);
 
-    Route::post('/majors/check-mail', [MajorController::class, 'checkName'])->name('majors.checkname');
+    Route::post('/majors/check-name', [MajorController::class, 'checkName'])->name('majors.checkname');
     Route::resource('/majors', MajorController::class);
 
-    Route::post('/courses/check-mail', [CourseController::class, 'checkName'])->name('courses.checkname');
+    Route::post('/courses/check-name', [CourseController::class, 'checkName'])->name('courses.checkname');
     Route::resource('/courses', CourseController::class);
 
-    Route::post('/subjects/check-mail', [SubjectController::class, 'checkName'])->name('subjects.checkname');
+    Route::post('/subjects/check-name', [SubjectController::class, 'checkName'])->name('subjects.checkname');
     Route::resource('/subjects', SubjectController::class);
 
-    Route::post('/classes/check-mail', [ClassController::class, 'checkName'])->name('classes.checkname');
+    Route::get('/classes/change-status', [ClassController::class, 'changeStatus'])->name('classes.changeStatus');
+    Route::post('/classes/check-name', [ClassController::class, 'checkName'])->name('classes.checkname');
     Route::post('/classes/register-class', [ClassController::class, 'registerClass'])->name('classes.register-class');
     Route::post('/classes/cancel-class', [ClassController::class, 'cancelClass'])->name('classes.cancel-class');
     Route::resource('/classes', ClassController::class);

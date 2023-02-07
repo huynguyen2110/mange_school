@@ -14,4 +14,5 @@ interface ClassInterface
     public function checkName($request);
     public function storeRegisterClass($request);
     public function cancelClass($request);
+    public function changeStatus($id);
 }

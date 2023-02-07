@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Classes;
 
+use App\Enums\StatusClass;
 use App\Enums\UserRole;
 use App\Models\Classes;
 use App\Models\ClassStudent;
@@ -176,5 +177,18 @@ class ClassRepository extends BaseController implements ClassInterface
         }
 
         return $class->delete();
+    }
+
+    public function changeStatus($id)
+    {
+        $class = $this->class->where('id', $id)->first();
+        $class->status = StatusClass::START;
+
+        if (! $class->save()) {
+            DB::rollBack();
+            return false;
+        }
+        DB::commit();
+        return true;
     }
 }

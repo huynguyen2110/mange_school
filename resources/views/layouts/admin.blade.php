@@ -29,7 +29,7 @@
 <div id="app" >
     <div class="c-sidebar c-sidebar-dark c-sidebar-fixed c-sidebar-lg-show" id="sidebar">
         <div class="c-sidebar-brand d-lg-down-none">
-            CRM
+
         </div>
         @include('include.admin.sidebar')
         <button class="c-sidebar-minimizer c-class-toggler" type="button" data-target="_parent"

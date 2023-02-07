@@ -14,6 +14,8 @@ import BtnDeleteConfirm from './components/common/btnDeleteConfirm.vue';
 import BtnRegisterClass from './components/class/btnRegisterClass';
 import BtnCancelClass from './components/class/btnCancelClass';
 import BtnRegisterAlreadyClass from "./components/class/btnRegisterAlreadyClass";
+import BtnPreventCancelClass from "./components/class/btnPreventCancelClass";
+
 
 
 import CreateStudent from './components/student/create';
@@ -91,6 +93,7 @@ app.component("btn-delete-confirm", BtnDeleteConfirm);
 app.component("btn-register-class", BtnRegisterClass);
 app.component("btn-cancel-class", BtnCancelClass);
 app.component("btn-register-already-class", BtnRegisterAlreadyClass);
+app.component("btn-prevent-cancel-class", BtnPreventCancelClass);
 app.use(VueSweetalert2);
 
 app.mount('#app');

@@ -165,4 +165,17 @@ class ClassController extends BaseController
             'message' => 'Có lỗi xảy ra',
         ], StatusCode::INTERNAL_ERR);
     }
+
+    public function changeStatus(Request $request)
+    {
+
+        if ($this->class->changeStatus($request->class)) {
+            $this->setFlash(__('Mở lớp thành công'));
+
+            return redirect(route('classes.index'));
+        }
+        $this->setFlash(__('Có lỗi nảy ra'), 'error');
+
+        return redirect(route('classes.index'));
+    }
 }

@@ -85,9 +85,15 @@
                                                     $score = $item->scores->where('class_id',$request->class)->first()
                                                 ?>
 
-                                                <td>{{$score->midterm_score}}</td>
-                                                <td>{{$score->final_score}}</td>
-                                                <td>{{$score->total}}</td>
+                                                @if($score)
+                                                    <td>{{$score->midterm_score}}</td>
+                                                    <td>{{$score->final_score}}</td>
+                                                    <td>{{$score->total}}</td>
+                                                @else
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                @endif
                                             @else
                                                 <td></td>
                                                 <td></td>

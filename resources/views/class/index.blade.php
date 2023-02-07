@@ -45,6 +45,7 @@
                                         <th >Tên</th>
                                         <th >Môn học</th>
                                         <th >Giáo viên</th>
+                                        <th >Trạng thái</th>
                                         <th></th>
                                     </tr>
                                     </thead>
@@ -54,42 +55,57 @@
                                             <td >{{$item->name}}</td>
                                             <td >{{$item->subjects->name}}</td>
                                             <td >{{$item->teachers->name}}</td>
+                                            <td >{{\App\Enums\StatusClass::getDescription($item->status)}}</td>
+                                            <td></td>
                                             <td class="float-right">
                                                 @if(true)
+                                                    <?php
+                                                    $register = \App\Models\ClassStudent::where('class_id', $item->id)->where('student_id', \Illuminate\Support\Facades\Auth::user()->uuid)->first();
+                                                    $checkClass = \App\Models\Classes::join('class_students','classes.id','class_students.class_id')
+                                                        ->where('classes.subject_id', $item->subject_id)
+                                                        ->where('student_id', \Illuminate\Support\Facades\Auth::user()->uuid)
+                                                        ->get('class_students.*')
+                                                        ->count();
+                                                    ?>
+
+                                                    @if($item->status==\App\Enums\StatusClass::NOTSTART)
+                                                        <a  class="btn btn-primary" href="{{route('classes.changeStatus', "class=$item->id")}}">
+                                                            Mở lớp
+                                                        </a>
+                                                    @endif
                                                     <a  class="btn btn-xs btn-info m-1 " href="{{route('classes.edit', $item->id)}}">
                                                         Sửa
                                                     </a>
                                                     <a  class="btn btn-success" href="{{route('students.index', "class=$item->id")}}">
                                                         Nhập điểm
                                                     </a>
-
-                                                    <?php
-                                                        $register = \App\Models\ClassStudent::where('class_id', $item->id)->where('student_id', \Illuminate\Support\Facades\Auth::user()->uuid)->first();
-                                                        $checkClass = \App\Models\Classes::join('class_students','classes.id','class_students.class_id')
-                                                            ->where('classes.subject_id', $item->subject_id)
-                                                            ->where('student_id', \Illuminate\Support\Facades\Auth::user()->uuid)
-                                                            ->get('class_students.*')
-                                                            ->count();
-                                                    ?>
-                                                    @if(!$register)
-                                                        @if($checkClass == 0)
-                                                            <btn-register-class
-                                                                :message-confirm="{{ json_encode('Bạn có muốn đăng kí vào lớp này không？') }}"
-                                                                :register-action="{{ json_encode(route('classes.register-class')) }}"
-                                                                :class-id="{{ json_encode($item->id) }}"
-                                                                :student-uuid= "{{ json_encode($currentUser) }}"
-                                                            >
-                                                            </btn-register-class>
-                                                        @else
-                                                            <btn-register-already-class
-                                                                :message-confirm="{{ json_encode('Trùng với môn học đã đăng kí') }}"
-                                                                :register-action="{{ json_encode(route('classes.register-class')) }}"
-                                                                :class-id="{{ json_encode($item->id) }}"
-                                                                :student-uuid= "{{ json_encode($currentUser) }}"
-                                                            >
-                                                            </btn-register-already-class>
-                                                        @endif
+                                                    @if ($item->status==\App\Enums\StatusClass::START)
+                                                        <btn-prevent-cancel-class
+                                                            :message-confirm="{{ json_encode('Bạn không thể hủy hoặc đăng kí do lớp đã bắt đầu học') }}"
+                                                            :class-id="{{ json_encode($item->id) }}"
+                                                            :student-uuid= "{{ json_encode($currentUser) }}"
+                                                        >
+                                                        </btn-prevent-cancel-class>
                                                     @else
+                                                        @if(!$register)
+                                                            @if($checkClass == 0)
+                                                                <btn-register-class
+                                                                    :message-confirm="{{ json_encode('Bạn có muốn đăng kí vào lớp này không？') }}"
+                                                                    :register-action="{{ json_encode(route('classes.register-class')) }}"
+                                                                    :class-id="{{ json_encode($item->id) }}"
+                                                                    :student-uuid= "{{ json_encode($currentUser) }}"
+                                                                >
+                                                                </btn-register-class>
+                                                            @else
+                                                                <btn-register-already-class
+                                                                    :message-confirm="{{ json_encode('Trùng với môn học đã đăng kí') }}"
+                                                                    :register-action="{{ json_encode(route('classes.register-class')) }}"
+                                                                    :class-id="{{ json_encode($item->id) }}"
+                                                                    :student-uuid= "{{ json_encode($currentUser) }}"
+                                                                >
+                                                                </btn-register-already-class>
+                                                            @endif
+                                                        @else
                                                             <btn-cancel-class
                                                                 :message-confirm="{{ json_encode('Bạn có muốn hủy đăng kí lớp này không？') }}"
                                                                 :cancel-action="{{ json_encode(route('classes.cancel-class')) }}"
@@ -97,6 +113,7 @@
                                                                 :student-uuid= "{{ json_encode($currentUser) }}"
                                                             >
                                                             </btn-cancel-class>
+                                                        @endif
                                                     @endif
                                                 @endif
                                             </td>
