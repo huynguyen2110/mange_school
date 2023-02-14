@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\StatusCode;
 use App\Http\Requests\MajorRequest;
+use App\Models\Major;
 use App\Repositories\Major\MajorInterface;
 use Illuminate\Http\Request;
 
@@ -18,6 +19,8 @@ class MajorController extends BaseController
 
     public function index(Request $request)
     {
+        $this->authorize('viewAny', Major::class);
+
         $users = $this->major->get($request);
         return view('major.index',[
             'users' => $users,
@@ -33,6 +36,8 @@ class MajorController extends BaseController
      */
     public function create()
     {
+        $this->authorize('create', Major::class);
+
         return view('major.create');
     }
 
@@ -44,6 +49,8 @@ class MajorController extends BaseController
      */
     public function store(MajorRequest $request)
     {
+        $this->authorize('create', Major::class);
+
         $major = $this->major->store($request);
 
         if (! $major) {
@@ -75,6 +82,11 @@ class MajorController extends BaseController
      */
     public function edit($id)
     {
+
+        $majorPolicy = Major::find($id);
+
+        $this->authorize('update', $majorPolicy);
+
         $major = $this->major->getById($id);
 
         if (! $this->major->getById($id)) {
@@ -96,6 +108,11 @@ class MajorController extends BaseController
      */
     public function update(MajorRequest $request, $id)
     {
+        $majorPolicy = Major::find($id);
+
+        $this->authorize('update', $majorPolicy);
+
+
         if ($this->major->update($request, $id)) {
             $this->setFlash(__('Cập nhật thông tin ngành thành công'));
 

@@ -27,6 +27,7 @@ class StudentController extends BaseController
      */
     public function index(Request $request)
     {
+        $this->authorize('viewAny', User::class);
         $users = $this->student->get($request);
 
         return view('student.index',[
@@ -43,6 +44,7 @@ class StudentController extends BaseController
      */
     public function create()
     {
+        $this->authorize('create', User::class);
         $major = $this->student->getMajors();
         $course = $this->student->getCourses();
 
@@ -60,6 +62,7 @@ class StudentController extends BaseController
      */
     public function store(StudentRequest $request)
     {
+        $this->authorize('create', User::class);
         $student = $this->student->store($request);
 
         if (! $student) {
@@ -91,6 +94,9 @@ class StudentController extends BaseController
      */
     public function edit($id)
     {
+        $user = User::find($id);
+
+        $this->authorize('update', $user);
 
         $student = $this->student->getById($id);
         $major = $this->student->getMajors();
@@ -117,6 +123,10 @@ class StudentController extends BaseController
      */
     public function update(StudentRequest $request, $id)
     {
+        $user = User::find($id);
+
+        $this->authorize('update', $user);
+
         if ($this->student->update($request, $id)) {
             $this->setFlash(__('Cập nhật thông tin sinh viên thành công'));
 

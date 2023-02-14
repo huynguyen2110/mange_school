@@ -40,9 +40,11 @@
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <button class="btn btn-primary d-block mb-4 float-right">
-                            <a class="btn btn-primary" href="{{route('students.create')}}">Tạo mới</a>
-                        </button>
+                        @if(\Illuminate\Support\Facades\Auth::user()->role == \App\Enums\UserRole::Admin)
+                            <button class="btn btn-primary d-block mb-4 float-right">
+                                <a class="btn btn-primary" href="{{route('students.create')}}">Tạo mới</a>
+                            </button>
+                        @endif
                         <div class="col-sm-3 mb-4">
                             <limit-page-option :limit-page-option="{{ json_encode(PAGE_SIZE_LIMIT) }}"
                                                :new-size-limit="{{ $newSizeLimit }}">
@@ -62,7 +64,9 @@
                                             <th >Điểm cuối kì</th>
                                             <th >Tổng điểm</th>
                                         @endif
-                                        <th></th>
+                                        @if(\Illuminate\Support\Facades\Auth::user()->role == \App\Enums\UserRole::Admin)
+                                            <th></th>
+                                        @endif
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -99,22 +103,30 @@
                                                 <td></td>
                                                 <td></td>
                                             @endif
-
+                                            <?php
+                                                $checkTeacher = \App\Models\Classes::where('id', $request->class)
+                                                    ->where('teacher_id', \Illuminate\Support\Facades\Auth::user()->uuid)
+                                                    ->first();
+                                            ?>
                                             <td class="float-right">
-                                                <a class="btn btn-xs btn-info m-1 " href="{{route('students.edit', $item->uuid)}}">
-                                                    Sửa
-                                                </a>
+                                                @if(\Illuminate\Support\Facades\Auth::user()->role == \App\Enums\UserRole::Admin)
+                                                    <a class="btn btn-xs btn-info m-1 " href="{{route('students.edit', $item->uuid)}}">
+                                                        Sửa
+                                                    </a>
+                                                    <btn-delete-confirm
+                                                        :message-confirm="{{ json_encode('Bạn có muốn xóa sinh viên này không？') }}"
+                                                        :delete-action="{{ json_encode(route('students.destroy', $item->uuid)) }}">
+                                                    </btn-delete-confirm>
+                                                @endif
 
-                                                @if($request->class)
+
+                                                @if($request->class && $checkTeacher)
                                                     <a class="btn btn-success" href="{{route('students.score',["student=$item->uuid", "class=$request->class"])}}">
                                                         Nhập điểm
                                                     </a>
                                                 @endif
 
-                                                <btn-delete-confirm
-                                                    :message-confirm="{{ json_encode('Bạn có muốn xóa sinh viên này không？') }}"
-                                                    :delete-action="{{ json_encode(route('students.destroy', $item->uuid)) }}">
-                                                </btn-delete-confirm>
+
                                             </td>
                                         </tr>
                                     @endforeach

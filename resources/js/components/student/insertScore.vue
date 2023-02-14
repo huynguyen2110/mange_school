@@ -137,7 +137,7 @@ export default {
 
         this.$watch( vm => [vm.model.midterm_score, vm.model.final_score],() => {
             if(this.model.midterm_score != undefined && this.model.final_score != undefined) {
-                this.model.total = Number((+this.model.midterm_score * 0.3 + this.model.final_score * 0.7).toFixed(1));
+                this.model.total = Number((this.model.midterm_score * 0.3 + this.model.final_score * 0.7).toFixed(1));
             }
         });
 

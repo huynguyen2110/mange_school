@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\StatusCode;
 use App\Http\Requests\ClassRequest;
+use App\Models\Classes;
 use App\Models\ClassStudent;
 use App\Repositories\Classes\ClassInterface;
 use Illuminate\Http\Request;
@@ -20,7 +21,7 @@ class ClassController extends BaseController
 
     public function index(Request $request)
     {
-
+        $this->authorize('viewAny', Classes::class);
         $users = $this->class->get($request);
         return view('class.index',[
             'users' => $users,
@@ -37,6 +38,8 @@ class ClassController extends BaseController
      */
     public function create()
     {
+        $this->authorize('create', Classes::class);
+
         $subject = $this->class->getSubjects();
         $teacher = $this->class->getTeachers();
 
@@ -54,6 +57,8 @@ class ClassController extends BaseController
      */
     public function store(ClassRequest $request)
     {
+        $this->authorize('create', Classes::class);
+
         $class = $this->class->store($request);
 
         if (! $class) {
@@ -85,6 +90,10 @@ class ClassController extends BaseController
      */
     public function edit($id)
     {
+        $classPolicy = Classes::find($id);
+
+        $this->authorize('update', $classPolicy);
+
         $subject = $this->class->getSubjects();
         $teacher = $this->class->getTeachers();
         $class = $this->class->getById($id);
@@ -110,6 +119,10 @@ class ClassController extends BaseController
      */
     public function update(ClassRequest $request, $id)
     {
+        $classPolicy = Classes::find($id);
+
+        $this->authorize('update', $classPolicy);
+
         if ($this->class->update($request, $id)) {
             $this->setFlash(__('Cập nhật thông tin lớp thành công'));
 

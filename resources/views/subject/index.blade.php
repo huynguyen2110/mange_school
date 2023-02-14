@@ -28,9 +28,11 @@
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <button class="btn btn-primary d-block mb-4 float-right">
-                            <a class="btn btn-primary" href="{{route('subjects.create')}}">Tạo mới</a>
-                        </button>
+                        @if(\Illuminate\Support\Facades\Auth::user()->role == \App\Enums\UserRole::Admin)
+                            <button class="btn btn-primary d-block mb-4 float-right">
+                                <a class="btn btn-primary" href="{{route('subjects.create')}}">Tạo mới</a>
+                            </button>
+                        @endif
                         <div class="col-sm-3 mb-4">
                             <limit-page-option :limit-page-option="{{ json_encode(PAGE_SIZE_LIMIT) }}"
                                                :new-size-limit="{{ $newSizeLimit }}">
@@ -43,6 +45,9 @@
                                     <tr>
                                         <th >Tên</th>
                                         <th >Ngành</th>
+                                        @if(\Illuminate\Support\Facades\Auth::user()->role == \App\Enums\UserRole::Admin)
+                                            <th></th>
+                                        @endif
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -50,11 +55,13 @@
                                         <tr>
                                             <td >{{$item->name}}</td>
                                             <td >{{$item->majors->name}}</td>
-                                            <td>
-                                                <a class="btn btn-xs btn-info m-1 float-right" href="{{route('subjects.edit', $item->id)}}">
-                                                    Sửa
-                                                </a>
-                                            </td>
+                                            @if(\Illuminate\Support\Facades\Auth::user()->role == \App\Enums\UserRole::Admin)
+                                                <td>
+                                                    <a class="btn btn-xs btn-info m-1 float-right" href="{{route('subjects.edit', $item->id)}}">
+                                                        Sửa
+                                                    </a>
+                                                </td>
+                                            @endif
                                         </tr>
                                     @endforeach
                                     </tbody>

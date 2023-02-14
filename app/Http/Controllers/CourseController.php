@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\StatusCode;
 use App\Http\Requests\CourseRequest;
 use App\Http\Requests\MajorRequest;
+use App\Models\Course;
 use App\Repositories\Course\CourseInterface;
 use Illuminate\Http\Request;
 
@@ -23,6 +24,7 @@ class CourseController extends BaseController
      */
     public function index(Request $request)
     {
+        $this->authorize('viewAny', Course::class);
         $users = $this->course->get($request);
         return view('course.index',[
             'users' => $users,
@@ -38,6 +40,7 @@ class CourseController extends BaseController
      */
     public function create()
     {
+        $this->authorize('create', Course::class);
         return view('course.create');
     }
 
@@ -49,6 +52,8 @@ class CourseController extends BaseController
      */
     public function store(CourseRequest $request)
     {
+        $this->authorize('create', Course::class);
+
         $course = $this->course->store($request);
 
         if (! $course) {
@@ -80,6 +85,10 @@ class CourseController extends BaseController
      */
     public function edit($id)
     {
+        $coursePolicy = Course::find($id);
+
+        $this->authorize('update', $coursePolicy);
+
         $course = $this->course->getById($id);
 
         if (! $this->course->getById($id)) {
@@ -101,6 +110,12 @@ class CourseController extends BaseController
      */
     public function update(CourseRequest $request, $id)
     {
+        $coursePolicy = Course::find($id);
+
+        $this->authorize('update', $coursePolicy);
+
+
+
         if ($this->course->update($request, $id)) {
             $this->setFlash(__('Cập nhật thông tin khóa thành công'));
 

@@ -28,9 +28,12 @@
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <button class="btn btn-primary d-block mb-4 float-right">
-                            <a class="btn btn-primary" href="{{route('teachers.create')}}">Tạo mới</a>
-                        </button>
+                        @if(\Illuminate\Support\Facades\Auth::user()->role == \App\Enums\UserRole::Admin)
+                            <button class="btn btn-primary d-block mb-4 float-right">
+
+                                    <a class="btn btn-primary" href="{{route('teachers.create')}}">Tạo mới</a>
+                            </button>
+                        @endif
                         <div class="col-sm-3 mb-4">
                             <limit-page-option :limit-page-option="{{ json_encode(PAGE_SIZE_LIMIT) }}"
                                                :new-size-limit="{{ $newSizeLimit }}">
@@ -45,7 +48,9 @@
                                         <th >Email</th>
                                         <th >Số điện thoại</th>
                                         <th >Ngành</th>
-                                        <th></th>
+                                        @if(\Illuminate\Support\Facades\Auth::user()->role == \App\Enums\UserRole::Admin)
+                                            <th></th>
+                                        @endif
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -55,16 +60,18 @@
                                             <td >{{$item->email}}</td>
                                             <td >{{$item->phone}}</td>
                                             <td >{{$item->majors->name}}</td>
-                                            <td class="float-right">
-                                                <a class="btn btn-xs btn-info m-1 " href="{{route('teachers.edit', $item->uuid)}}">
-                                                    Sửa
-                                                </a>
+                                            @if(\Illuminate\Support\Facades\Auth::user()->role == \App\Enums\UserRole::Admin)
+                                                <td class="float-right">
+                                                    <a class="btn btn-xs btn-info m-1 " href="{{route('teachers.edit', $item->uuid)}}">
+                                                        Sửa
+                                                    </a>
 
-                                                <btn-delete-confirm
-                                                    :message-confirm="{{ json_encode('Bạn có muốn xóa giảng viên này không？') }}"
-                                                    :delete-action="{{ json_encode(route('teachers.destroy', $item->uuid)) }}">
-                                                </btn-delete-confirm>
-                                            </td>
+                                                    <btn-delete-confirm
+                                                        :message-confirm="{{ json_encode('Bạn có muốn xóa giảng viên này không？') }}"
+                                                        :delete-action="{{ json_encode(route('teachers.destroy', $item->uuid)) }}">
+                                                    </btn-delete-confirm>
+                                                </td>
+                                            @endif
                                         </tr>
                                     @endforeach
                                     </tbody>

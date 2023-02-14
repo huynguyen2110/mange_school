@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\StatusCode;
 use App\Http\Requests\TeacherRequest;
+use App\Models\User;
 use App\Repositories\Teacher\TeacherInterface;
 use Illuminate\Http\Request;
 
@@ -19,6 +20,7 @@ class TeacherController extends BaseController
 
     public function index(Request $request)
     {
+        $this->authorize('viewAny', User::class);
         $users = $this->teacher->get($request);
         return view('teacher.index',[
             'users' => $users,
@@ -34,8 +36,9 @@ class TeacherController extends BaseController
      */
     public function create()
     {
-        $major = $this->teacher->getMajors();
+        $this->authorize('create', User::class);
 
+        $major = $this->teacher->getMajors();
 
         return view('teacher.create',[
             'major' => $major,
@@ -51,6 +54,7 @@ class TeacherController extends BaseController
      */
     public function store(TeacherRequest $request)
     {
+        $this->authorize('create', User::class);
         $teacher = $this->teacher->store($request);
 
         if (! $teacher) {
@@ -82,6 +86,10 @@ class TeacherController extends BaseController
      */
     public function edit($id)
     {
+        $user = User::find($id);
+
+        $this->authorize('update', $user);
+
         $teacher = $this->teacher->getById($id);
         $major = $this->teacher->getMajors();
 
@@ -105,6 +113,11 @@ class TeacherController extends BaseController
      */
     public function update(TeacherRequest $request, $id)
     {
+        $user = User::find($id);
+
+        $this->authorize('update', $user);
+
+
         if ($this->teacher->update($request, $id)) {
             $this->setFlash(__('Cập nhật thông tin giảng viên thành công'));
 

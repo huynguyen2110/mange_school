@@ -6,9 +6,12 @@ use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class BaseController extends Controller
 {
+    use AuthorizesRequests;
+
     public function generateUuid($table, $prefix)
     {
         $str = substr(Str::uuid()->getHex(), 0, 20);

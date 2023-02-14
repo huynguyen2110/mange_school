@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\StatusCode;
 use App\Http\Requests\SubjectRequest;
+use App\Models\Subject;
 use App\Repositories\Subject\SubjectInterface;
 use Illuminate\Http\Request;
 
@@ -18,6 +19,7 @@ class SubjectController extends BaseController
 
     public function index(Request $request)
     {
+        $this->authorize('viewAny', Subject::class);
         $users = $this->subject->get($request);
         return view('subject.index',[
             'users' => $users,
@@ -33,6 +35,7 @@ class SubjectController extends BaseController
      */
     public function create()
     {
+        $this->authorize('create', Subject::class);
         $major = $this->subject->getMajors();
 
         return view('subject.create',[
@@ -48,6 +51,7 @@ class SubjectController extends BaseController
      */
     public function store(SubjectRequest $request)
     {
+        $this->authorize('create', Subject::class);
         $subject = $this->subject->store($request);
 
         if (! $subject) {
@@ -79,6 +83,10 @@ class SubjectController extends BaseController
      */
     public function edit($id)
     {
+        $subjectPolicy = Subject::find($id);
+
+        $this->authorize('update', $subjectPolicy);
+
         $subject = $this->subject->getById($id);
         $major = $this->subject->getMajors();
 
@@ -102,6 +110,10 @@ class SubjectController extends BaseController
      */
     public function update(SubjectRequest $request, $id)
     {
+        $subjectPolicy = Subject::find($id);
+
+        $this->authorize('update', $subjectPolicy);
+
         if ($this->subject->update($request, $id)) {
             $this->setFlash(__('Cập nhật thông tin môn thành công'));
 
