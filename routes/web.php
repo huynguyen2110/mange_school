@@ -37,8 +37,9 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::group([
     'middleware' => 'auth',
 ], function () {
-    Route::resource('/admin', AdminController::class);
+//    Route::resource('/admin', AdminController::class);
 
+    Route::get('/students/export-pdf', [StudentController::class, 'exportPdf'])->name('students.exportPdf');
     Route::post('/students/check-mail', [StudentController::class, 'checkMail'])->name('students.checkmail');
     Route::post('/students/check-phone', [StudentController::class, 'checkPhone'])->name('students.checkphone');
     Route::get('/students/score', [StudentController::class, 'score'])->name('students.score');
@@ -46,7 +47,7 @@ Route::group([
     Route::post('/students/update-score', [StudentController::class, 'updateScore'])->name('students.update-score');
     Route::resource('/students', StudentController::class);
 
-
+    Route::get('/teachers/export-pdf', [TeacherController::class, 'exportPdf'])->name('teachers.exportPdf');
     Route::resource('/teachers', TeacherController::class);
 
     Route::post('/majors/check-name', [MajorController::class, 'checkName'])->name('majors.checkname');

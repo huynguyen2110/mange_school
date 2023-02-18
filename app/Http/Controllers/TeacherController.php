@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 
 use App\Enums\StatusCode;
+use App\Enums\UserRole;
 use App\Http\Requests\TeacherRequest;
 use App\Models\User;
 use App\Repositories\Teacher\TeacherInterface;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class TeacherController extends BaseController
@@ -146,5 +148,14 @@ class TeacherController extends BaseController
         return response()->json([
             'message' => 'Có lỗi xảy ra',
         ], StatusCode::INTERNAL_ERR);
+    }
+    public function exportPdf(Request $request)
+    {
+
+        $data = User::where('role', UserRole::Teacher)->get();
+        $pdf = Pdf::loadView('teacher.exportPdf', [
+            'data' => $data,
+        ]);
+        return $pdf->download('teacher.pdf');
     }
 }

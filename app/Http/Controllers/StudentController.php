@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\StatusCode;
+use App\Enums\UserRole;
 use App\Http\Requests\StudentRequest;
 use App\Models\Course;
 use App\Models\User;
@@ -11,6 +12,7 @@ use App\Repositories\Major\MajorInterface;
 use App\Repositories\Student\StudentInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class StudentController extends BaseController
 {
@@ -225,5 +227,15 @@ class StudentController extends BaseController
         $this->setFlash(__('Nhập điểm thất bại'), 'error');
 
         return redirect(route('students.score',["student=$request->student_id", "class=$request->class_id"]));
+    }
+
+    public function exportPdf(Request $request)
+    {
+
+        $data = User::where('role', UserRole::Student)->get();
+        $pdf = Pdf::loadView('student.exportPdf', [
+            'data' => $data,
+        ]);
+        return $pdf->download('student.pdf');
     }
 }

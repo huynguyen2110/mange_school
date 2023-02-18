@@ -41,8 +41,11 @@
                 <div class="card">
                     <div class="card-body">
                         @if(\Illuminate\Support\Facades\Auth::user()->role == \App\Enums\UserRole::Admin)
-                            <button class="btn btn-primary d-block mb-4 float-right">
+                            <button class="btn btn-primary d-block mb-4 float-right" style="margin-left: 10px">
                                 <a class="btn btn-primary" href="{{route('students.create')}}">Tạo mới</a>
+                            </button>
+                            <button class="btn btn-primary d-block mb-4 float-right">
+                                <a class="btn btn-primary" href="{{route('students.exportPdf')}}">Xuất PDF</a>
                             </button>
                         @endif
                         <div class="col-sm-3 mb-4">
